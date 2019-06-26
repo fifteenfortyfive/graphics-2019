@@ -1,3 +1,40 @@
-.container {
-  background-color: red;
+.layoutContainer {
+  display: grid;
+  grid-template:
+      "sidebar mainvideo" 657px
+      "sidebar subvideos" 179px
+      "omnibar omnibar" 63px
+    / 431px 1168px;
+  grid-gap: 1px;
+}
+
+.sidebar {
+  grid-area: sidebar;
+  display: flex;
+  overflow: hidden;
+  background-color: #222;
+
+  * {
+    flex: 1 1 auto;
+    padding-right: 0 0.5em;
+  }
+}
+
+.mainVideo {
+  grid-area: mainvideo;
+  overflow: hidden;
+  background-color: #222;
+}
+
+.subVideos {
+  grid-area: subvideos;
+  overflow: hidden;
+  background-color: #222;
+}
+
+
+.omnibar {
+  grid-area: omnibar;
+  overflow: hidden;
+  background-color: #777;
 }

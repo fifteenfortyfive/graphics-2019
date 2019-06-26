@@ -1,0 +1,7 @@
+.teamCard {
+  --color: white;
+}
+
+.cardHeader {
+  color: var(--color);
+}

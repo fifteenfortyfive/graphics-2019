@@ -15,9 +15,6 @@ export function fetchTeam(teamId) {
     method: 'get',
     path: `/api/v1/teams/${teamId}`,
     name: `teams.${teamId}`,
-    query: denulled({
-      team_ids: teamIds
-    })
   }, (dispatch, response) => {
     dispatch(receiveTeams([response.team]))
   });
