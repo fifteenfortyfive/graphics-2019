@@ -24,7 +24,7 @@ class Stream extends Component {
   }
 
   render() {
-    const {account, loadingAccount} = this.props;
+    const {account, src, loadingAccount} = this.props;
 
     if(loadingAccount || account == null) {
       return "Loading Stream Data";
@@ -43,7 +43,14 @@ class Stream extends Component {
       //      controls: false
       //    }}
       //  />
-      <div class={style.stream} />
+      <div class={style.stream}>
+        { src &&
+          <img
+            class={style.streamImg}
+            src={src}
+          />
+        }
+      </div>
     );
   }
 }

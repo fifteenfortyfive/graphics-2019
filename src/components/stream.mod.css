@@ -1,4 +1,10 @@
+@value brand, gray-700 from '../style/theme.css';
+
 .stream {
-  background-color: #777;
-  border: 1px solid #ccc;
+  background-color: gray-700;
+  border-right: 1px solid brand;
+}
+
+.streamImg {
+  width: 100%;
 }

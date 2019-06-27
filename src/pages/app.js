@@ -9,11 +9,16 @@ import * as RunActions from '../actions/runs';
 import * as TeamActions from '../actions/teams';
 import Layout from '../components/layout';
 import Stream from '../components/stream';
+import Run from '../components/run';
+import Omnibar from '../components/omnibar';
 import TeamCard from '../components/cards/team-card';
 
 import { EVENT_ID } from '../constants';
 import { runTime } from '../util';
 import style from './app.mod.css';
+
+import stream1 from '../res/stream1.jpg';
+import stream2 from '../res/stream2.jpg';
 
 
 class App extends Component {
@@ -23,30 +28,42 @@ class App extends Component {
     dispatch(TeamActions.fetchTeams(eventId));
     dispatch(AccountActions.fetchAccounts());
     dispatch(GameActions.fetchGames());
+    dispatch(RunActions.fetchRuns(EVENT_ID, {}));
   }
 
   render() {
-    const {eventId, teams} = this.props;
+    const {eventId, teams, runs} = this.props;
 
-    const team = Object.values(teams)[1];
+    const team1 = Object.values(teams)[1];
+    const team2 = Object.values(teams)[2];
+    const team3 = Object.values(teams)[3];
 
     return (
       <Layout>
         <div class={style.layoutContainer}>
           <div class={style.sidebar}>
-            { team &&
-              <TeamCard key={team.id} teamId={team.id} />
+            <h1>Upcoming Runs</h1>
+            { team1 &&
+              <TeamCard key={team1.id} teamId={team1.id} />
+            }
+            { team2 &&
+              <TeamCard key={team2.id} teamId={team2.id} />
+            }
+            { team3 &&
+              <TeamCard key={team3.id} teamId={team3.id} />
             }
           </div>
           <div class={style.mainVideo}>
-            <Stream accountId={212} />
+            <Stream accountId={212} src={stream1} />
           </div>
           <div class={style.subVideos}>
-            <Stream accountId={35} />
+            <Stream accountId={35} src={stream1} />
+            <Stream accountId={35} src={stream2} />
+            <Stream accountId={35} src={stream1} />
+            <Stream accountId={35} src={stream2} />
           </div>
 
-          <div class={style.omnibar}>
-          </div>
+          <Omnibar className={style.omnibar} />
         </div>
       </Layout>
     );
@@ -56,7 +73,6 @@ class App extends Component {
 const mapStateToProps = (state) => ({
   eventId: EVENT_ID,
   event: state.events[EVENT_ID],
-  runs: state.runs,
   teams: state.teams
 });
 

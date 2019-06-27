@@ -1,0 +1,45 @@
+@value white, gray-200, gray-600 from '../style/theme.css';
+@value size-12, size-14, size-16, size-20, space-1, space-2, space-3, space-6 from '../style/theme.css';
+
+.run {
+  display: flex;
+  font-size: size-20;
+  align-items: center;
+  color: white;
+}
+
+.runnerAvatar {
+  flex: 0 0 48px;
+  margin-right: space-3;
+}
+
+.gameName {
+  margin-bottom: space-1;
+  color: gray-200;
+  color: var(--color);
+  font-size: size-12;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.runnerName {
+  margin-bottom: space-2;
+  font-size: size-14;
+}
+
+
+.detail {
+  font-size: size-14;
+}
+
+.estimate {
+  display: inline-block;
+  margin-right: space-2;
+  font-variant-numeric: tabular-nums;
+}
+
+.pb {
+  color: var(--color);
+  font-variant-numeric: tabular-nums;
+}

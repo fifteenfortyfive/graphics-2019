@@ -1,6 +1,8 @@
+@value white, brand from '../style/theme.css';
+
 .layout {
   display: block;
-  background-color: #eb3d4c;
+  background-color: brand;
   width: 1600px;
   height: 900px;
   color: white;

@@ -6,6 +6,7 @@
     "serve": "parcel serve --no-hmr src/index.html --out-dir ../public/"
   },
   "dependencies": {
+    "classnames": "^2.2.6",
     "core-js": "3",
     "history": "^4.9.0",
     "luxon": "1.10.0",

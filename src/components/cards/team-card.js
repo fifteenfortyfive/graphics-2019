@@ -5,9 +5,9 @@ import _ from 'lodash';
 import * as AccountActions from '../../actions/accounts';
 import * as RunActions from '../../actions/runs';
 import * as TeamActions from '../../actions/teams';
+import Run from '../run';
 
 import { EVENT_ID } from '../../constants';
-import { runTime } from '../../util';
 import style from './team-card.mod.css';
 
 
@@ -27,27 +27,33 @@ class TeamCard extends Component {
     if(loading) return "loading";
 
     const captain = accounts[team.captain_id];
+    const nearbyRuns = runs.slice(6, 9);
 
     return (
-      <div class={style.teamCard}>
-        <div class={style.cardHeader} style={`--color: #${team.color}`}>
-          {team.name} / {captain.username}
+      <div class={style.teamCard} style={`--color: #${team.color}`}>
+        <div class={style.cardHeader}>
+          <div class={style.teamName}>
+            {team.name}
+          </div>
         </div>
 
-        <ul class="has-text-white">
-          { _.map(runs, (run) => {
-              const game = games[run.game_id];
-              const runner = accounts[run.account_id];
-              return (
-                <li>
-                  <strong>{game.name}</strong><br/>
-                  <span>{runner.username}</span><br />
-                  <span>{runTime(run.est_seconds)} / {runTime(run.pb_seconds)}</span>
-                </li>
-              );
-            })
-          }
-        </ul>
+        <div class={style.details}>
+          <ul>
+            { _.map(nearbyRuns, (run) => {
+                const game = games[run.game_id];
+                const runner = accounts[run.account_id];
+
+                return <Run
+                  key={run.id}
+                  className={style.run}
+                  game={game}
+                  runner={runner}
+                  run={run}
+                />;
+              })
+            }
+          </ul>
+        </div>
       </div>
     );
   }

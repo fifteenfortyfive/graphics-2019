@@ -1,40 +1,43 @@
+@value black, gray-500, gray-700 from '../style/theme.css';
+@value space-1, space-2, space-3, space-4 from '../style/theme.css';
+
 .layoutContainer {
   display: grid;
   grid-template:
-      "sidebar mainvideo" 657px
-      "sidebar subvideos" 179px
-      "omnibar omnibar" 63px
-    / 431px 1168px;
+      "sidebar mainvideo" 666px
+      "sidebar subvideos" 167px
+      "omnibar omnibar" 65px
+    / 415px 1184px;
   grid-gap: 1px;
 }
 
 .sidebar {
   grid-area: sidebar;
   display: flex;
+  padding: space-4;
+  flex-direction: column;
+  justify-content: space-between;
   overflow: hidden;
-  background-color: #222;
-
-  * {
-    flex: 1 1 auto;
-    padding-right: 0 0.5em;
-  }
+  background-color: gray-700;
 }
 
 .mainVideo {
   grid-area: mainvideo;
   overflow: hidden;
-  background-color: #222;
+  background-color: black;
 }
 
 .subVideos {
   grid-area: subvideos;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  width: 100%;
   overflow: hidden;
-  background-color: #222;
+  background-color: black;
 }
 
 
 .omnibar {
   grid-area: omnibar;
-  overflow: hidden;
-  background-color: #777;
 }

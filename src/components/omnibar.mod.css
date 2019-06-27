@@ -1,0 +1,68 @@
+@value brand, gray-700, white from '../style/theme.css';
+@value space-2, space-3, space-4, size-10, size-42, font-mono from '../style/theme.css';
+
+.omnibar {
+  display: flex;
+  align-items: center;
+  background-color: gray-700;
+}
+
+.logo {
+  flex: 0 0 160px;
+  height: 100%;
+  padding: space-4 space-3;
+  color: white;
+  border-right: 1px solid brand;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+  height: 100%;
+  color: white;
+}
+
+.teamHeader {
+  --color: gray-700;
+  flex: 1 0 auto;
+  position: sticky;
+  left: 0;
+  height: 100%;
+
+  p {
+    padding: space-3 space-3;
+    vertical-align: middle;
+    background-color: var(--color);
+    color: white;
+  }
+}
+
+.run {
+  flex: 1 0 auto;
+  padding: space-3 space-4;
+}
+
+.timerBox {
+  flex: 0 0 180px;
+  height: 100%;
+  padding: space-3 space-4;
+  border-left: 1px solid brand;
+  color: white;
+}
+
+.timerDescription {
+  font-size: size-10;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.75px;
+}
+
+.timer {
+  font-family: font-mono;
+  font-size: size-42;
+  font-weight: 700;
+}
