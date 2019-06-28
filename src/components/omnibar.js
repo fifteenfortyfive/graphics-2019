@@ -1,7 +1,8 @@
 import {h} from 'preact';
 import classNames from 'classnames';
-import { connect } from 'preact-redux';
+import { connect } from 'react-redux';
 import _ from 'lodash';
+import { Tween, Timeline } from 'react-gsap';
 
 import Run from './run';
 
@@ -24,7 +25,7 @@ const Omnibar = (props) => {
     <div class={classNames(style.omnibar, className)}>
       <div class={style.logo}>The 1545</div>
       <div class={style.content}>
-        <div class={style.teamHeader} style={`--color: #${team && team.color}`}>
+        <div class={style.teamHeader} style={{'--color': `#${team && team.color}`}}>
           <p>{team && team.name}</p>
         </div>
         { _.map(firstRuns, (run) => {

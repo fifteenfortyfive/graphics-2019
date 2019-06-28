@@ -1,5 +1,5 @@
 import { h, render } from 'preact';
-import { Provider, connect } from 'preact-redux';
+import { Provider, connect } from 'react-redux';
 import App from './pages/app';
 import {store} from './reducer';
 

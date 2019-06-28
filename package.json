@@ -15,18 +15,17 @@
     "postcss-modules": "^1.4.1",
     "postcss-nested": "^4.1.2",
     "postcss-purgecss": "^1.0.0",
-    "preact": "<10",
-    "preact-compat": "^3.19.0",
-    "preact-context": ">=1.1.0",
-    "preact-redux": "^2.1.0",
+    "preact": "10.0.0-beta.3",
+    "react-gsap": "^1.2.0",
     "react-player": "^1.11.1",
+    "react-redux": "^7.1.0",
     "redux": ">=2",
     "redux-thunk": "2.3.0",
     "reselect": "^4.0.0",
     "yarn": "1.12.1"
   },
   "alias": {
-    "react": "preact-compat",
-    "react-dom": "preact-compat"
+    "react": "preact/compat",
+    "react-dom": "preact/compat"
   }
 }

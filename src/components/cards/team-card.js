@@ -1,5 +1,5 @@
 import { h, render, Component } from 'preact';
-import { connect } from 'preact-redux';
+import { connect } from 'react-redux';
 import _ from 'lodash';
 
 import * as AccountActions from '../../actions/accounts';
@@ -30,7 +30,7 @@ class TeamCard extends Component {
     const nearbyRuns = runs.slice(6, 9);
 
     return (
-      <div class={style.teamCard} style={`--color: #${team.color}`}>
+      <div class={style.teamCard} style={{'--color': `#${team.color}`}}>
         <div class={style.cardHeader}>
           <div class={style.teamName}>
             {team.name}

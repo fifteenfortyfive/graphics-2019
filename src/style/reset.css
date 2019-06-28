@@ -50,3 +50,14 @@ table {
 * {
   box-sizing: border-box;
 }
+
+
+/* No scrollbars */
+div {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+div::-webkit-scrollbar {
+  display: none;
+}

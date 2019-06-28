@@ -1,5 +1,5 @@
 @value white, gray-100, gray-700, gray-760, black from '../../style/theme.css';
-@value size-24, space-2, space-3, space-4 from '../../style/theme.css';
+@value size-16, space-2, space-3, space-4 from '../../style/theme.css';
 @value radius-1 from '../../style/theme.css';
 
 .teamCard {
@@ -20,7 +20,7 @@
 }
 
 .teamName {
-  font-size: size-24;
+  font-size: size-16;
   padding: space-2 space-3;
 }
 
