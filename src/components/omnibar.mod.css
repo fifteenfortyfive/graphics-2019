@@ -19,31 +19,10 @@
 
 .content {
   flex: 1 1 auto;
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: scroll;
+  position: relative;
   height: 100%;
   color: white;
-}
-
-.teamHeader {
-  --color: gray-700;
-  flex: 1 0 auto;
-  position: sticky;
-  left: 0;
-  height: 100%;
-
-  p {
-    padding: space-3 space-3;
-    vertical-align: middle;
-    background-color: var(--color);
-    color: white;
-  }
-}
-
-.run {
-  flex: 1 0 auto;
-  padding: space-3 space-4;
+  overflow: hidden;
 }
 
 .timerBox {

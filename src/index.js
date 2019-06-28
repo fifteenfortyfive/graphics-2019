@@ -11,3 +11,5 @@ render(
     <App />
   </Provider>
 , document.querySelector('#app-container'));
+
+import 'preact/debug';
