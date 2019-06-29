@@ -27,7 +27,7 @@ class GameResults extends Component {
         .to(this.header.current, 0.2, {opacity: 1})
         .to(this.header.current, 0.3, {x: 0, ease: "Power2.easeOut"})
         // Children
-        .add(this.childTimeline)
+        .add(this.childTimeline, "-=0.1")
         // Out
         .to(this.header.current, 0.5, {x: -320, ease: "Power2.easeIn"})
         .eventCallback("onComplete", onComplete)

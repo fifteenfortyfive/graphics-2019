@@ -1,5 +1,5 @@
 @value radius-2 from '../../style/theme.css';
 
 .avatar {
-  border-radius: radius-2;
+  border-radius: 15%;
 }

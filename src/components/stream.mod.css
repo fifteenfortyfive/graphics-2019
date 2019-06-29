@@ -1,10 +1,32 @@
 @value brand, gray-700 from '../style/theme.css';
+@value size-12, space-2, space-3 from '../style/theme.css';
 
 .stream {
   background-color: gray-700;
-  border-right: 1px solid brand;
+  height: 100%;
+}
+
+.leftDetail {
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: space-3 space-3;
+  font-size: size-12;
+}
+
+.avatar {
+  flex: 0 0 auto;
+  margin-right: space-3;
+}
+
+.headerNames {
+  margin-bottom: space-2;
 }
 
 .streamImg {
+  height: 100%;
   width: 100%;
 }

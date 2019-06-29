@@ -42,27 +42,47 @@ class App extends Component {
     return (
       <Layout>
         <div class={style.layoutContainer}>
-          <div class={style.sidebar}>
-            <h1>Upcoming Runs</h1>
-            { team1 &&
-              <TeamCard key={team1.id} teamId={team1.id} />
-            }
-            { team2 &&
-              <TeamCard key={team2.id} teamId={team2.id} />
-            }
-            { team3 &&
-              <TeamCard key={team3.id} teamId={team3.id} />
-            }
-          </div>
           <div class={style.mainVideo}>
-            <Stream accountId={212} src={stream1} />
+            <Stream accountId={212} src={stream1} withDetail={false} />
           </div>
+
+          <div class={style.sidebar}>
+          </div>
+
           <div class={style.subVideos}>
-            <Stream accountId={35} src={stream1} />
-            <Stream accountId={35} src={stream2} />
-            <Stream accountId={35} src={stream1} />
-            <Stream accountId={35} src={stream2} />
+            <Stream
+              accountId={35}
+              src={stream1}
+              withDetail={true}
+            />
+            <Stream
+              accountId={40}
+              src={stream2}
+              withDetail={true}
+            />
+            <Stream
+              accountId={142}
+              src={stream1}
+              withDetail={true}
+            />
+            <Stream
+              accountId={56}
+              src={stream2}
+              withDetail={true}
+            />
+            <Stream
+              accountId={56}
+              src={stream1}
+              withDetail={true}
+            />
+            <Stream
+              accountId={56}
+              src={stream2}
+              withDetail={true}
+            />
           </div>
+
+          <div class={style.other}></div>
 
           <Omnibar className={style.omnibar} />
         </div>

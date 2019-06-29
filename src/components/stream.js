@@ -1,8 +1,9 @@
-import {h, Component} from 'preact';
+import {h, Component, Fragment} from 'preact';
 import { connect } from 'react-redux';
 import ReactPlayer from 'react-player';
 
 import * as AccountActions from '../actions/accounts';
+import Avatar from './accounts/avatar';
 import LoadingSpinner from '../uikit/loading-spinner';
 
 import { ASSETS_URL } from '../constants';
@@ -24,30 +25,28 @@ class Stream extends Component {
     }
   }
 
-  render() {
-    const {account, src, loadingAccount} = this.props;
+  renderStream() {
+    const {account, team, game, src, withDetail} = this.props;
+    return (
+      <Fragment>
+        { src &&
+          <img
+            class={style.streamImg}
+            src={src}
+          />
+        }
+      </Fragment>
+    );
+  }
 
-    // const {twitch} = account;
-    // // For some reason ReactPlayer can't deal with capital letters?
-    // const acceptableTwitch = twitch.toLowerCase();
+  render() {
+    const {account, team, game, src, loadingAccount} = this.props;
 
     return (
-      //  <ReactPlayer
-      //    className={style.stream}
-      //    url={`https://twitch.tv/${acceptableTwitch}`}
-      //    playing
-      //    config={{
-      //      controls: false
-      //    }}
-      //  />
       <div class={style.stream}>
-        { loadingAccount || account == null
+        { loadingAccount || account == null || team == null || game == null
           ? <LoadingSpinner />
-          : src &&
-            <img
-              class={style.streamImg}
-              src={src}
-            />
+          : this.renderStream()
         }
       </div>
     );
@@ -66,10 +65,14 @@ Stream.Qualities = {
 
 const mapStateToProps = (state, props) => {
   const {accountId} = props;
+  const teamsA = Object.values(state.teams);
+  const gamesA = Object.values(state.games);
 
   return {
     ...state,
     account: state.accounts[accountId],
+    team: teamsA[accountId % teamsA.length],
+    game: gamesA[accountId % gamesA.length],
     loadingAccount: state.fetching[`accounts.${accountId}`]
   };
 };

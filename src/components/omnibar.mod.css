@@ -1,5 +1,5 @@
 @value brand, gray-700, white from '../style/theme.css';
-@value space-2, space-3, space-4, size-10, size-42, font-mono, font-brand from '../style/theme.css';
+@value space-1, space-2, space-3, space-4, size-10, size-42, font-mono, font-brand from '../style/theme.css';
 
 .omnibar {
   display: flex;
@@ -18,6 +18,7 @@
 
 .logoText {
   padding-right: space-3;
+  padding-bottom: space-1;
   color: white;
   font-family: font-brand;
   font-size: 40px;

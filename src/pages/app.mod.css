@@ -4,21 +4,11 @@
 .layoutContainer {
   display: grid;
   grid-template:
-      "subvideos mainvideo" 720px
-      "subvideos other" 115px
+      "sidebar mainvideo" 684px
+      "subvideos subvideos" 151px
       "omnibar omnibar" 63px
-    / 319px 1280px;
+    / 383px 1216px;
   grid-gap: 1px;
-}
-
-.sidebar {
-  grid-area: sidebar;
-  display: flex;
-  padding: space-4;
-  flex-direction: column;
-  justify-content: space-between;
-  overflow: hidden;
-  background-color: gray-700;
 }
 
 .mainVideo {
@@ -27,19 +17,24 @@
   background-color: black;
 }
 
+.sidebar {
+  grid-area: sidebar;
+  background-color: black;
+}
+
 .subVideos {
   grid-area: subvideos;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: stretch;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-gap: 1px;
+  height: 100%;
   width: 100%;
   overflow: hidden;
-  background-color: black;
+}
 
-  * {
-    flex: 0 0 296px;
-  }
+.other {
+  grid-area: other;
+  background-color: black;
 }
 
 
