@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import ReactPlayer from 'react-player';
 
 import * as AccountActions from '../actions/accounts';
+import LoadingSpinner from '../uikit/loading-spinner';
 
 import { ASSETS_URL } from '../constants';
 import style from './stream.mod.css';
@@ -26,13 +27,9 @@ class Stream extends Component {
   render() {
     const {account, src, loadingAccount} = this.props;
 
-    if(loadingAccount || account == null) {
-      return "Loading Stream Data";
-    }
-
-    const {twitch} = account;
-    // For some reason ReactPlayer can't deal with capital letters?
-    const acceptableTwitch = twitch.toLowerCase();
+    // const {twitch} = account;
+    // // For some reason ReactPlayer can't deal with capital letters?
+    // const acceptableTwitch = twitch.toLowerCase();
 
     return (
       //  <ReactPlayer
@@ -44,11 +41,13 @@ class Stream extends Component {
       //    }}
       //  />
       <div class={style.stream}>
-        { src &&
-          <img
-            class={style.streamImg}
-            src={src}
-          />
+        { loadingAccount || account == null
+          ? <LoadingSpinner />
+          : src &&
+            <img
+              class={style.streamImg}
+              src={src}
+            />
         }
       </div>
     );

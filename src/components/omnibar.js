@@ -3,53 +3,13 @@ import classNames from 'classnames';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import TeamRuns from './omni/team-runs';
+import TeamsList from './omni/teams-list';
+import GamesList from './omni/games-list';
+import Sequenced from '../uikit/anim/sequenced';
 
 import style from './omnibar.mod.css';
 
 class Omnibar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      section: 0
-    };
-  }
-
-  handleSectionCompleted() {
-    const { section } = this.state;
-    this.setState({section: section + 1});
-  }
-
-  renderSection(index) {
-    const {
-      runs,
-      accounts,
-      games,
-      teams,
-      className
-    } = this.props;
-
-
-    const team = Object.values(teams)[index];
-    const firstRuns = _.filter(runs, {team_id: team && team.id});
-
-    const runsWithAssociations = _.map(firstRuns, (run) => ({
-      id: run.id,
-      run: run,
-      runner: accounts[run.account_id],
-      game: games[run.game_id],
-    }));
-
-    if(team == null || runsWithAssociations.length == 0) return null;
-
-    return <TeamRuns
-      key={team.id}
-      team={team}
-      runs={runsWithAssociations}
-      onComplete={this.handleSectionCompleted.bind(this)}
-    />;
-  }
-
   render() {
     const {
       runs,
@@ -58,14 +18,19 @@ class Omnibar extends Component {
       teams,
       className
     } = this.props;
-    const { section } = this.state;
 
 
     return (
       <div class={classNames(style.omnibar, className)}>
-        <div class={style.logo}>The 1545</div>
+        <div class={style.logo}>
+          <div class={style.logoText}>The 1545</div>
+        </div>
+
         <div class={style.content}>
-          {this.renderSection(section)}
+          <Sequenced onLoop={() => console.log("looped")}>
+            <GamesList />
+            <TeamsList />
+          </Sequenced>
         </div>
 
         <div class={style.timerBox}>

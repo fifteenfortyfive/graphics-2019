@@ -1,0 +1,30 @@
+@value white, size-20 from '../style/theme.css';
+
+.container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.2;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.2;
+  }
+}
+
+.spinner {
+  color: white;
+  animation: pulse 2s infinite linear;
+}
+
+

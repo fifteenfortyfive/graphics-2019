@@ -4,10 +4,10 @@
 .layoutContainer {
   display: grid;
   grid-template:
-      "sidebar mainvideo" 666px
-      "sidebar subvideos" 167px
-      "omnibar omnibar" 65px
-    / 415px 1184px;
+      "subvideos mainvideo" 720px
+      "subvideos other" 115px
+      "omnibar omnibar" 63px
+    / 319px 1280px;
   grid-gap: 1px;
 }
 
@@ -30,11 +30,16 @@
 .subVideos {
   grid-area: subvideos;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: stretch;
   width: 100%;
   overflow: hidden;
   background-color: black;
+
+  * {
+    flex: 0 0 296px;
+  }
 }
 
 

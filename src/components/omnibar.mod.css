@@ -1,5 +1,5 @@
 @value brand, gray-700, white from '../style/theme.css';
-@value space-2, space-3, space-4, size-10, size-42, font-mono from '../style/theme.css';
+@value space-2, space-3, space-4, size-10, size-42, font-mono, font-brand from '../style/theme.css';
 
 .omnibar {
   display: flex;
@@ -9,12 +9,20 @@
 
 .logo {
   flex: 0 0 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 100%;
-  padding: space-4 space-3;
-  color: white;
   border-right: 1px solid brand;
-  font-size: 32px;
+}
+
+.logoText {
+  padding-right: space-3;
+  color: white;
+  font-family: font-brand;
+  font-size: 40px;
   font-weight: 700;
+  text-shadow: 0 0 20px brand;
 }
 
 .content {
@@ -44,4 +52,5 @@
   font-family: font-mono;
   font-size: size-42;
   font-weight: 700;
+  font-variant-numeric: tabular-nums;
 }

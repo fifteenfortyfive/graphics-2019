@@ -6,7 +6,7 @@ import _ from 'lodash';
 
 import { FadeShrink } from './timelines';
 
-import style from './list-cycle.mod.css';
+import style from './slide-cycle.mod.css';
 
 class SlideCycle extends Component {
   constructor(props) {
@@ -25,7 +25,7 @@ class SlideCycle extends Component {
 
     timeline
         .staggerFromTo(this.refs, 0.4, {y: 80}, {y: 0, ease: "Power4.easeOut"}, 0.08)
-        .add(fadeTLs, "+=0", "normal", 0.6);
+        .add(fadeTLs, "+=3", "normal", 6);
   }
 
   render() {

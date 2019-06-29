@@ -12,6 +12,7 @@ import Stream from '../components/stream';
 import Run from '../components/run';
 import Omnibar from '../components/omnibar';
 import TeamCard from '../components/cards/team-card';
+import LoadingSpinner from '../uikit/loading-spinner';
 
 import { EVENT_ID } from '../constants';
 import { runTime } from '../util';
@@ -32,7 +33,7 @@ class App extends Component {
   }
 
   render() {
-    const {eventId, teams, runs} = this.props;
+    const {eventId, teams, runs, ready} = this.props;
 
     const team1 = Object.values(teams)[1];
     const team2 = Object.values(teams)[2];
@@ -70,11 +71,21 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  eventId: EVENT_ID,
-  event: state.events[EVENT_ID],
-  teams: state.teams
-});
+const mapStateToProps = (state) => {
+  const ready =
+      !state.fetching[`events.${EVENT_ID}`] &&
+      !state.fetching[`runs`] &&
+      !state.fetching[`accounts`] &&
+      !state.fetching[`teams`] &&
+      !state.fetching[`games`];
+
+  return {
+    eventId: EVENT_ID,
+    event: state.events[EVENT_ID],
+    teams: state.teams,
+    ready
+  }
+};
 
 const mapDispatchToProps = (dispatch) => ({dispatch});
 

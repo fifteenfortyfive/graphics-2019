@@ -7,7 +7,7 @@ import Run from '../run';
 import SlideCycle from '../../uikit/anim/slide-cycle';
 
 
-class TeamRuns extends Component {
+class GameResults extends Component {
   constructor(props) {
     super(props);
 
@@ -37,13 +37,13 @@ class TeamRuns extends Component {
   render() {
     const {
       runs,
-      team,
+      game,
     } = this.props;
 
     return (
-      <div class={style.content} ref={this.container} style={{'--color': `#${team.color}`}}>
+      <div class={style.content} ref={this.container} style={{'--color': `#${game.color}`}}>
         <div ref={this.header} class={style.teamHeader}>
-          <p>{team.name}</p>
+          <p>{game.name}</p>
         </div>
         { runs && runs.length > 0 &&
           <SlideCycle
@@ -56,9 +56,9 @@ class TeamRuns extends Component {
                   key={run.id}
                   run={run.run}
                   runner={run.runner}
-                  game={run.game}
                   team={run.team}
-                  midRow="game"
+                  game={run.game}
+                  midRow="team"
                 />
               ))
             }
@@ -69,4 +69,4 @@ class TeamRuns extends Component {
   }
 };
 
-export default TeamRuns;
+export default GameResults;

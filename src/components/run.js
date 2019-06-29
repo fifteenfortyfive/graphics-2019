@@ -7,9 +7,9 @@ import { runTime } from '../util';
 import style from './run.mod.css';
 
 const Run = (props) => {
-  const {game, runner, run, className} = props;
+  const {game, runner, run, team, midRow = "game", className} = props;
 
-  if(game == null || runner == null || run == null) return null;
+  if(game == null || runner == null || run == null || team == null) return null;
 
   return (
     <div class={classNames(style.run, className)}>
@@ -18,7 +18,12 @@ const Run = (props) => {
       </div>
       <div class={style.runInfo}>
         <div class={style.runnerName}>{runner.username}</div>
-        <div class={style.gameName}>{game.name}</div>
+        { midRow == "team" &&
+          <div class={style.teamName} style={{'--color': `#${team.color}`}}>{team.name}</div>
+        }
+        { midRow == "game" &&
+          <div class={style.gameName}>{game.name}</div>
+        }
         <div class={style.detail}>
           <span class={style.estimate}>{runTime(run.est_seconds)}</span>
           <span class={style.pb}>{runTime(run.pb_seconds)}</span>

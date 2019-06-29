@@ -6,6 +6,7 @@ import * as AccountActions from '../../actions/accounts';
 import * as RunActions from '../../actions/runs';
 import * as TeamActions from '../../actions/teams';
 import Run from '../run';
+import LoadingSpinner from '../../uikit/loading-spinner';
 
 import { EVENT_ID } from '../../constants';
 import style from './team-card.mod.css';
@@ -24,7 +25,13 @@ class TeamCard extends Component {
   render() {
     const {runs, team, games, accounts, loading} = this.props;
 
-    if(loading) return "loading";
+    if(loading) {
+      return (
+        <div class={style.teamCard} style={{'--color': `#${team.color}`}}>
+          <LoadingSpinner />
+        </div>
+      );
+    }
 
     const captain = accounts[team.captain_id];
     const nearbyRuns = runs.slice(6, 9);
@@ -49,6 +56,7 @@ class TeamCard extends Component {
                   game={game}
                   runner={runner}
                   run={run}
+                  team={team}
                 />;
               })
             }
