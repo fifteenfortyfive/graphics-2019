@@ -4,6 +4,7 @@
 .stream {
   background-color: gray-700;
   height: 100%;
+  overflow: hidden;
 }
 
 .leftDetail {

@@ -26,13 +26,19 @@ class Stream extends Component {
   }
 
   renderStream() {
-    const {account, team, game, src, withDetail} = this.props;
+    const {account, team, game, src} = this.props;
+
+    const {twitch} = account;
+    const acceptableTwitch = twitch.toLowerCase();
+
     return (
       <Fragment>
         { src &&
-          <img
-            class={style.streamImg}
-            src={src}
+          <ReactPlayer
+            url={`https://twitch.tv/${acceptableTwitch}`}
+            playing={true}
+            width="100%"
+            height="100%"
           />
         }
       </Fragment>

@@ -43,7 +43,7 @@ class App extends Component {
       <Layout>
         <div class={style.layoutContainer}>
           <div class={style.mainVideo}>
-            <Stream accountId={212} src={stream1} withDetail={false} />
+            <Stream accountId={212} src={stream1} />
           </div>
 
           <div class={style.sidebar}>
@@ -51,34 +51,28 @@ class App extends Component {
 
           <div class={style.subVideos}>
             <Stream
+              accountId={22}
+              src={stream1}
+            />
+            <Stream
               accountId={35}
-              src={stream1}
-              withDetail={true}
-            />
-            <Stream
-              accountId={40}
               src={stream2}
-              withDetail={true}
             />
             <Stream
-              accountId={142}
+              accountId={101}
               src={stream1}
-              withDetail={true}
             />
             <Stream
-              accountId={56}
+              accountId={12}
               src={stream2}
-              withDetail={true}
             />
             <Stream
-              accountId={56}
+              accountId={165}
               src={stream1}
-              withDetail={true}
             />
             <Stream
-              accountId={56}
+              accountId={170}
               src={stream2}
-              withDetail={true}
             />
           </div>
 
