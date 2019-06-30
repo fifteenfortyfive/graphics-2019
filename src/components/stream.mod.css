@@ -7,27 +7,7 @@
   overflow: hidden;
 }
 
-.leftDetail {
-  height: 100%;
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  padding: space-3 space-3;
-  font-size: size-12;
-}
-
-.avatar {
-  flex: 0 0 auto;
-  margin-right: space-3;
-}
-
-.headerNames {
-  margin-bottom: space-2;
-}
-
-.streamImg {
+.playerContainer {
   height: 100%;
   width: 100%;
 }
