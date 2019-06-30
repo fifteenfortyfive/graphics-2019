@@ -11,6 +11,7 @@ import Layout from '../components/layout';
 import Stream from '../components/stream';
 import Run from '../components/run';
 import Omnibar from '../components/omnibar';
+import SubVideos from '../components/sub-videos';
 import TeamCard from '../components/cards/team-card';
 import LoadingSpinner from '../uikit/loading-spinner';
 
@@ -52,32 +53,7 @@ class App extends Component {
           <div class={style.sidebar}>
           </div>
 
-          <div class={style.subVideos}>
-            <Stream
-              accountId={22}
-              quality={Stream.Qualities.VERY_LOW}
-            />
-            <Stream
-              accountId={35}
-              quality={Stream.Qualities.VERY_LOW}
-            />
-            <Stream
-              accountId={101}
-              quality={Stream.Qualities.VERY_LOW}
-            />
-            <Stream
-              accountId={140}
-              quality={Stream.Qualities.VERY_LOW}
-            />
-            <Stream
-              accountId={165}
-              quality={Stream.Qualities.VERY_LOW}
-            />
-            <Stream
-              accountId={141}
-              quality={Stream.Qualities.VERY_LOW}
-            />
-          </div>
+          <SubVideos class={style.subVideos} />
 
           <div class={style.other}></div>
 

@@ -4,10 +4,10 @@
 .layoutContainer {
   display: grid;
   grid-template:
-      "sidebar mainvideo" 684px
-      "subvideos subvideos" 151px
-      "omnibar omnibar" 63px
-    / 383px 1216px;
+      "sidebar mainvideo" 711px
+      "subvideos subvideos" 128px
+      "omnibar omnibar" 61px
+    / 335px 1264px;
   grid-gap: 1px;
 }
 
@@ -24,12 +24,6 @@
 
 .subVideos {
   grid-area: subvideos;
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-gap: 1px;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
 }
 
 .other {

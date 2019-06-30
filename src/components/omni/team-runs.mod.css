@@ -14,7 +14,7 @@
 
   p {
     margin-top: space-4;
-    padding: space-3;
+    padding: 6px;
     background-color: var(--color);
     font-size: size-16;
     overflow: hidden;
@@ -26,5 +26,5 @@
 
 
 .run {
-  padding: space-3 space-4;
+  padding: 6px space-4;
 }

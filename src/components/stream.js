@@ -37,7 +37,7 @@ class Stream extends Component {
   componentDidUpdate(prevProps) {
     const { accountId, account, dispatch } = this.props;
 
-    if(prevProps.accountId != accountId && accountId != null) {
+    if(prevProps.accountId != accountId) {
       dispatch(AccountActions.fetchAccount(accountId));
     }
 
@@ -68,7 +68,6 @@ class Stream extends Component {
     this.player.setChannel(acceptableTwitch);
     this.player.setQuality(quality);
     this.player.setVolume(volume);
-    setTimeout(() => console.log(this.player.getQualities()), 2000);
 
     if(pause && !this.player.isPaused()) {
       this.player.pause();
@@ -81,12 +80,26 @@ class Stream extends Component {
     const {account, team, game} = this.props;
 
     return (
-      <div
-        class={style.playerContainer}
-        id={this.playerContainerID}
-        ref={this.playerContainer}
-      >
-      </div>
+      <Fragment>
+        <div
+          class={style.playerContainer}
+          id={this.playerContainerID}
+          ref={this.playerContainer}
+        >
+        </div>
+{/*        <div class={style.overlayContainer}>
+          <div class={style.overlay}>
+            <div class={style.runnerOverlay}>
+              <Avatar
+                className={style.runnerAvatar}
+                src={account.avatar_object_id}
+                size={16}
+              />
+              {account.username} - {team.name} - {game.name}
+            </div>
+          </div>
+        </div>*/}
+      </Fragment>
     );
   }
 
@@ -104,16 +117,14 @@ class Stream extends Component {
   }
 }
 
-// Arbitrarily decided. We don't really show larger than 720, so that makes
-// sense as the "HIGH" quality. 240 is still larger than the smallest we
-// would display, so it can be "LOW". "NORMAL" is probably useless.
+
 Stream.Qualities = {
   VERY_LOW: '160p30',
   LOW: '360p30',
   NORMAL: '480p30',
   HIGH: '720p30',
   SOURCE: 'chunked'
-}
+};
 
 
 const mapStateToProps = (state, props) => {
