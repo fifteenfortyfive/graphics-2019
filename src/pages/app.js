@@ -11,8 +11,8 @@ import Layout from '../components/layout';
 import Stream from '../components/stream';
 import Run from '../components/run';
 import Omnibar from '../components/omnibar';
+import Sidebar from '../components/sidebar';
 import SubVideos from '../components/sub-videos';
-import TeamCard from '../components/cards/team-card';
 import LoadingSpinner from '../uikit/loading-spinner';
 
 import { EVENT_ID } from '../constants';
@@ -36,29 +36,23 @@ class App extends Component {
   render() {
     const {eventId, teams, runs, ready} = this.props;
 
-    const team1 = Object.values(teams)[1];
-    const team2 = Object.values(teams)[2];
-    const team3 = Object.values(teams)[3];
-
     return (
       <Layout>
-        <div class={style.layoutContainer}>
-          <div class={style.mainVideo}>
-            <Stream
-              accountId={212}
-              quality={Stream.Qualities.HIGH}
-            />
-          </div>
+        { !ready
+          ? <LoadingSpinner />
+          : <div class={style.layoutContainer}>
+              <div class={style.mainVideo}>
+                <Stream
+                  accountId={212}
+                  quality={Stream.Qualities.HIGH}
+                />
+              </div>
 
-          <div class={style.sidebar}>
-          </div>
-
-          <SubVideos class={style.subVideos} />
-
-          <div class={style.other}></div>
-
-          <Omnibar className={style.omnibar} />
-        </div>
+              <Sidebar className={style.sidebar} />
+              <SubVideos class={style.subVideos} />
+              <Omnibar className={style.omnibar} />
+            </div>
+        }
       </Layout>
     );
   }

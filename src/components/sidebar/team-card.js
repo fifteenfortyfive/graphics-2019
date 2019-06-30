@@ -15,19 +15,15 @@ import style from './team-card.mod.css';
 class TeamCard extends Component {
   componentDidMount() {
     const {teamId, team, loadingTeam, runs, dispatch} = this.props;
-
-    const accountIds = _.map(runs, 'account_id');
-
     dispatch(TeamActions.fetchTeam(teamId));
-    dispatch(RunActions.fetchRuns(EVENT_ID, {teamId}));
   }
 
   render() {
     const {runs, team, games, accounts, loading} = this.props;
 
-    if(loading) {
+    if(loading || team == null) {
       return (
-        <div class={style.teamCard} style={{'--color': `#${team.color}`}}>
+        <div class={style.teamCard}>
           <LoadingSpinner />
         </div>
       );

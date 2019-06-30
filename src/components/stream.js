@@ -133,7 +133,6 @@ const mapStateToProps = (state, props) => {
   const gamesA = Object.values(state.games);
 
   return {
-    ...state,
     account: state.accounts[accountId],
     team: teamsA[accountId % teamsA.length],
     game: gamesA[accountId % gamesA.length],
