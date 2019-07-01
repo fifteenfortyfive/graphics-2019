@@ -7,6 +7,7 @@ import * as EventActions from '../actions/events';
 import * as GameActions from '../actions/games';
 import * as RunActions from '../actions/runs';
 import * as TeamActions from '../actions/teams';
+import * as WebSocketActions from '../actions/websocket';
 import Layout from '../components/layout';
 import Stream from '../components/stream';
 import Run from '../components/run';
@@ -26,6 +27,8 @@ import stream2 from '../res/stream2.jpg';
 class App extends Component {
   componentDidMount() {
     const {eventId, dispatch} = this.props;
+    WebSocketActions.bindSocketToDispatch(dispatch);
+
     dispatch(EventActions.fetchEvent(eventId));
     dispatch(TeamActions.fetchTeams(eventId));
     dispatch(AccountActions.fetchAccounts());

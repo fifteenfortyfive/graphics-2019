@@ -14,6 +14,10 @@ const defaultState = {
   teams: {},
   runs: {},
   fetching: {},
+  socket: {
+    connected: false
+  },
+  runUpdateQueue: []
 };
 
 const reducerActions = {
@@ -43,6 +47,26 @@ const reducerActions = {
       fetching: {
         ...state.fetching,
         [data.fetchId]: 'failed'
+      }
+    };
+  },
+
+  'STREAM_SOCKET_OPENED': (state) => {
+    return {
+      ...state,
+      socket: {
+        ...state.socket,
+        connected: true
+      }
+    };
+  },
+
+  'STREAM_SOCKET_CLOSED': (state) => {
+    return {
+      ...state,
+      socket: {
+        ...state.socket,
+        connected: false
       }
     };
   },
@@ -191,6 +215,30 @@ const reducerActions = {
           [name]: value
         }
       }
+    };
+  },
+
+  'RECEIVE_RUN_UPDATE': (state, {data}) => {
+    const {runId, updateId, type} = data;
+
+    console.log(state.runUpdateQueue);
+
+    return {
+      ...state,
+      runUpdateQueue: [
+        ...state.runUpdateQueue,
+        { type, runId, updateId }
+      ]
+    };
+  },
+
+
+  'RUN_UPDATE_HANDLED': (state, {data}) => {
+    const {updateId} = data;
+
+    return {
+      ...state,
+      runUpdateQueue: _.reject(state.runUpdateQueue, {updateId})
     };
   }
 }

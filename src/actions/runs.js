@@ -1,6 +1,7 @@
 import { commonThunk, denulled } from '../actions';
+import { EVENT_ID } from '../constants';
 
-export function fetchRuns(eventId, {teamId, runIds}) {
+export function fetchRuns(eventId = EVENT_ID, {teamId, runIds} = {}) {
   return commonThunk({
     method: 'get',
     path: `/api/v1/events/${eventId}/runs`,
@@ -10,12 +11,18 @@ export function fetchRuns(eventId, {teamId, runIds}) {
       run_ids: runIds
     })
   }, (dispatch, response) => {
-    dispatch(receiveRuns(response.runs))
+    dispatch(receiveRuns(response.runs));
   });
 }
 
 export function fetchRun(runId) {
-  return fetchRuns([runId]);
+  return commonThunk({
+    method: 'get',
+    path: `/api/v1/events/${EVENT_ID}/runs/${runId}`,
+    name: `runs.${runId}`,
+  }, (dispatch, response) => {
+    dispatch(receiveRuns([response.run]));
+  });
 }
 
 
