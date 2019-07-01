@@ -36,11 +36,21 @@
 
 .updateOverlay {
   position: absolute;
+  width: 0;
+  height: 100%;
+  overflow: hidden;
+  background-color: brand;
+  z-index: 1;
+}
+
+.updateContent {
+  position: absolute;
   width: 100%;
   height: 100%;
-  background-color: brand;
-  opacity: 0;
-  z-index: 1;
+  display: flex;
+  align-items: center;
+  padding: space-3;
+  font-weight: 700;
 }
 
 .timerBox {

@@ -32,8 +32,9 @@ class Omnibar extends Component {
     const {runUpdate, dispatch} = this.props;
 
     this.timeline
-        .to(this.updateOverlayRef.current, 0.6, {opacity: 1})
-        .to(this.updateOverlayRef.current, 0.6, {opacity: 0}, "+=2")
+        .to(this.updateOverlayRef.current, 0.6, {width: 0})
+        .to(this.updateOverlayRef.current, 0.6, {width: "100%"}, "+=1")
+        .to(this.updateOverlayRef.current, 0.6, {width: 0}, "+=1")
         .play();
   }
 
@@ -64,10 +65,12 @@ class Omnibar extends Component {
         <div class={style.content}>
           <div ref={this.updateOverlayRef} class={style.updateOverlay}>
             { runUpdate &&
-              <p>{runUpdate.runId} - {runUpdate.updateId} - {runUpdate.type}</p>
+              <div class={style.updateContent}>
+                <p>{runUpdate.runId} - {runUpdate.updateId} - {runUpdate.type}</p>
+              </div>
             }
           </div>
-          <Sequenced onLoop={() => console.log("looped")}>
+          <Sequenced>
             <GamesList />
             <TeamsList />
           </Sequenced>

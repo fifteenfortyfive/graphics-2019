@@ -221,8 +221,6 @@ const reducerActions = {
   'RECEIVE_RUN_UPDATE': (state, {data}) => {
     const {runId, updateId, type} = data;
 
-    console.log(state.runUpdateQueue);
-
     return {
       ...state,
       runUpdateQueue: [
