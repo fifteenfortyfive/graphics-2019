@@ -7,32 +7,9 @@ import TeamRuns from './team-runs';
 import Sequenced from '../../uikit/anim/sequenced';
 
 class TeamsList extends Component {
-  renderSection(team, index) {
-    const {
-      runs,
-      accounts,
-      games
-    } = this.props;
-
-    const teamRuns = _.filter(runs, {team_id: team && team.id});
-    const runsWithAssociations = _.map(teamRuns, (run) => ({
-      id: run.id,
-      run: run,
-      runner: accounts[run.account_id],
-      game: games[run.game_id],
-      team: team,
-    }));
-
-    return <TeamRuns
-      key={team.id}
-      team={team}
-      runs={runsWithAssociations}
-    />;
-  }
-
   render() {
     const {
-      teams,
+      teamIds,
       onComplete
     } = this.props;
 
@@ -40,9 +17,9 @@ class TeamsList extends Component {
       <Sequenced
           onLoop={onComplete}
         >
-        { _.map(teams, (team) => {
-            return this.renderSection(team);
-          })
+        { _.map(teamIds, (teamId) => (
+            <TeamRuns key={teamId} teamId={teamId} />
+          ))
         }
       </Sequenced>
     );
@@ -50,10 +27,7 @@ class TeamsList extends Component {
 };
 
 const mapStateToProps = (state) => ({
-  runs: state.runs,
-  accounts: state.accounts,
-  games: state.games,
-  teams: Object.values(state.teams)
+  teamIds: Object.keys(state.teams),
 });
 
 const mapDispatchToProps = (dispatch) => ({dispatch});

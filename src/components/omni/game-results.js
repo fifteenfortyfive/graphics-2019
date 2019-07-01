@@ -1,4 +1,5 @@
 import {h, Component, createRef} from 'preact';
+import {connect} from 'react-redux';
 import {TimelineMax} from 'gsap/TimelineMax';
 import _ from 'lodash';
 import style from './team-runs.mod.css';
@@ -36,7 +37,7 @@ class GameResults extends Component {
 
   render() {
     const {
-      runs,
+      runIds,
       game,
     } = this.props;
 
@@ -45,28 +46,40 @@ class GameResults extends Component {
         <div ref={this.header} class={style.teamHeader}>
           <p>{game.name}</p>
         </div>
-        { runs && runs.length > 0 &&
-          <SlideCycle
-              class={style.content}
-              timeline={this.childTimeline}
-            >
-            { _.map(runs, (run) => (
-                <Run
-                  className={style.run}
-                  key={run.id}
-                  run={run.run}
-                  runner={run.runner}
-                  team={run.team}
-                  game={run.game}
-                  midRow="team"
-                />
-              ))
-            }
-          </SlideCycle>
-        }
+        <SlideCycle
+            class={style.content}
+            timeline={this.childTimeline}
+          >
+          { _.map(runIds, (runId) => (
+              <Run
+                className={style.run}
+                key={runId}
+                runId={runId}
+                midRow="team"
+              />
+            ))
+          }
+        </SlideCycle>
       </div>
     );
   }
 };
 
-export default GameResults;
+const mapStateToProps = (state, props) => {
+  const {gameId} = props;
+
+  const game = state.games[gameId];
+  const runIds = _.reduce(state.runs, (acc, run, runId) => {
+    if(run.game_id == gameId) acc.push(runId);
+    return acc;
+  }, []);
+
+  return {
+    runIds,
+    game,
+  };
+}
+
+export default connect(
+  mapStateToProps
+)(GameResults);

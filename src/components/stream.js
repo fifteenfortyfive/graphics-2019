@@ -9,6 +9,10 @@ import LoadingSpinner from '../uikit/loading-spinner';
 import { ASSETS_URL } from '../constants';
 import style from './stream.mod.css';
 
+// Set this to use thumbnails instead of interactive twitch players.
+// Reduces load times and helps React Dev Tools not break.
+const USE_STREAM_PLACEHOLDERS = true;
+
 const GLOBAL_PLAYER_OPTIONS = {
   width: "100%",
   height: "100%",
@@ -47,6 +51,8 @@ class Stream extends Component {
   }
 
   updateTwitchPlayer() {
+    if(USE_STREAM_PLACEHOLDERS) return null;
+
     const {
       account,
       quality,
@@ -103,14 +109,33 @@ class Stream extends Component {
     );
   }
 
+  renderPlaceholder() {
+    const { account } = this.props;
+
+    if(account == null) return null;
+
+    const { twitch } = account;
+    const acceptableTwitch = twitch.toLowerCase();
+
+    const thumbSrc = `https://static-cdn.jtvnw.net/previews-ttv/live_user_${acceptableTwitch}-320x180.jpg`;
+
+    return (
+      <div class={style.playerContainer}>
+        <img class={style.thumbnail} src={thumbSrc} />
+      </div>
+    );
+  }
+
   render() {
-    const {account, team, game, src, loadingAccount} = this.props;
+    const {account, loadingAccount} = this.props;
 
     return (
       <div class={style.stream}>
-        { loadingAccount || account == null || team == null || game == null
+        { loadingAccount
           ? <LoadingSpinner />
-          : this.renderStream()
+          : USE_STREAM_PLACEHOLDERS
+            ? this.renderPlaceholder()
+            : this.renderStream()
         }
       </div>
     );

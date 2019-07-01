@@ -1,11 +1,9 @@
 @value white, gray-100, gray-700, gray-760, black from '../../style/theme.css';
-@value size-16, space-2, space-3, space-4 from '../../style/theme.css';
-@value radius-1 from '../../style/theme.css';
+@value size-10, size-12, size-14, space-2, space-3, space-4 from '../../style/theme.css';
+@value font-mono, radius-1 from '../../style/theme.css';
 
 .teamCard {
   --color: white;
-  width: 100%;
-  border: 3px solid var(--color);
   overflow: hidden;
   border-radius: radius-1;
   box-shadow: 0 0 12px black;
@@ -13,30 +11,48 @@
 }
 
 .cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-color: var(--color);
   color: white;
-  font-weight: 600;
-  padding-bottom: space-2;
-}
-
-.teamName {
-  font-size: size-16;
   padding: space-2 space-3;
 }
 
+.teamName {
+  font-size: size-12;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.gameCount {
+  text-align: right;
+  font-size: size-12;
+  font-family: font-mono;
+  text-transform: uppercase;
+}
+
 .details {
+  padding: space-3 space-3 space-2 space-3;
 }
 
 
-.run {
-  border-bottom: 1px solid var(--color);
-  padding: space-3;
+.section {
+  margin-bottom: space-3;
 
   &:last-child {
-    border-bottom: none;
+    margin-bottom: 0;
   }
+}
 
-  &:nth-child(2) {
-    background-color: gray-760;
-  }
+.sectionHeader {
+  font-size: size-10;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: space-2;
+}
+
+.gameRow {
+  margin: space-3 0;
 }

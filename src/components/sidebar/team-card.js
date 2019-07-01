@@ -1,11 +1,13 @@
 import { h, render, Component } from 'preact';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
 import _ from 'lodash';
 
 import * as AccountActions from '../../actions/accounts';
 import * as RunActions from '../../actions/runs';
 import * as TeamActions from '../../actions/teams';
 import Run from '../run';
+import RunGameRow from './run-game-row';
 import LoadingSpinner from '../../uikit/loading-spinner';
 
 import { EVENT_ID } from '../../constants';
@@ -14,14 +16,20 @@ import style from './team-card.mod.css';
 
 class TeamCard extends Component {
   componentDidMount() {
-    const {teamId, team, loadingTeam, runs, dispatch} = this.props;
+    const {teamId, dispatch} = this.props;
     dispatch(TeamActions.fetchTeam(teamId));
   }
 
   render() {
-    const {runs, team, games, accounts, loading} = this.props;
+    const {
+      ready,
+      team,
+      currentRun,
+      runsByGame,
+      className
+    } = this.props;
 
-    if(loading || team == null) {
+    if(!ready) {
       return (
         <div class={style.teamCard}>
           <LoadingSpinner />
@@ -29,34 +37,33 @@ class TeamCard extends Component {
       );
     }
 
-    const captain = accounts[team.captain_id];
-    const nearbyRuns = runs.slice(6, 9);
-
     return (
-      <div class={style.teamCard} style={{'--color': `#${team.color}`}}>
+      <div class={classNames(style.teamCard, className)} style={{'--color': `#${team.color}`}}>
         <div class={style.cardHeader}>
-          <div class={style.teamName}>
-            {team.name}
-          </div>
+          <h1 class={style.teamName}>{team.name}</h1>
+          <p class={style.gameCount}>
+            Game 6/13
+          </p>
         </div>
-
         <div class={style.details}>
-          <ul>
-            { _.map(nearbyRuns, (run) => {
-                const game = games[run.game_id];
-                const runner = accounts[run.account_id];
-
-                return <Run
-                  key={run.id}
-                  className={style.run}
-                  game={game}
-                  runner={runner}
-                  run={run}
-                  team={team}
-                />;
-              })
+          <div class={style.section}>
+            <Run
+              className={style.run}
+              runId={currentRun.id}
+              showProgressBar={true}
+            />
+          </div>{/*
+          <div class={style.section}>
+            <h2 class={style.sectionHeader}>Progress</h2>
+            { _.map(runsByGame, (run, game) => (
+                <RunGameRow
+                  className={style.gameRow}
+                  key={game.id}
+                  runId={run.id}
+                />
+              ))
             }
-          </ul>
+          </div>*/}
         </div>
       </div>
     );
@@ -65,22 +72,21 @@ class TeamCard extends Component {
 
 const mapStateToProps = (state, props) => {
   const { teamId } = props;
-  const { teams, runs, accounts } = state;
 
-  const teamRuns = _.filter(runs, (r) => r.team_id == teamId);
-  const games = _.pick(state.games, _.map(runs, 'game_id'));
+  const team = state.teams[teamId];
 
-  const loading =
-      state.fetching[`teams.${teamId}`] ||
-      state.fetching[`games`] ||
-      state.fetching[`accounts`];
+  const runs = _.chain(Object.values(state.runs))
+    .filter((r) => r.team_id == teamId)
+    .value();
+
+  const currentRun = runs[teamId * 3 % runs.length];
+  const runsByGame = _.keyBy(runs, 'game_id');
 
   return {
-    team: teams[teamId],
-    runs: teamRuns,
-    games,
-    accounts,
-    loading
+    team,
+    runsByGame,
+    currentRun,
+    ready: !!team
   }
 };
 

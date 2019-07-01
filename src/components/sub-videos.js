@@ -30,34 +30,34 @@ class SubVideos extends Component {
         </div>
         <div class={style.element}>
           <Stream
-            accountId={17}
+            accountId={52}
             quality={Stream.Qualities.VERY_LOW}
           />
         </div>
         <div class={style.element}>
           <Stream
-            accountId={212}
+            accountId={59}
             quality={Stream.Qualities.VERY_LOW}
           />
         </div>
         <div class={style.element}>
           <Stream
-            accountId={94}
+            accountId={62}
             quality={Stream.Qualities.VERY_LOW}
           />
         </div>
-        <div class={style.element}>
+        <div class={classNames(style.element, style.featured)}>
           <FeaturedIndicator />
         </div>
         <div class={style.element}>
           <Stream
-            accountId={17}
+            accountId={165}
             quality={Stream.Qualities.VERY_LOW}
           />
         </div>
         <div class={style.element}>
           <Stream
-            accountId={212}
+            accountId={35}
             quality={Stream.Qualities.VERY_LOW}
           />
         </div>

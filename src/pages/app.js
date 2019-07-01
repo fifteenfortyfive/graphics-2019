@@ -43,8 +43,8 @@ class App extends Component {
           : <div class={style.layoutContainer}>
               <div class={style.mainVideo}>
                 <Stream
-                  accountId={212}
-                  quality={Stream.Qualities.HIGH}
+                  accountId={35}
+                  quality={Stream.Qualities.SOURCE}
                 />
               </div>
 

@@ -2,8 +2,9 @@
 
 .layout {
   display: block;
-  background-color: brand;
+  overflow: hidden;
   width: 1600px;
   height: 900px;
+  background-color: brand;
   color: white;
 }

@@ -22,10 +22,14 @@ class Sidebar extends Component {
       <div
           class={classNames(style.container, className)}
         >
-        { _.map(teamIds, (teamId) => {
-            return <TeamCard teamId={teamId} />
-          })
-        }
+        <div class={style.section}>
+          <div class={style.teamCards}>
+            { _.map(teamIds, (teamId) => {
+                return <TeamCard className={style.teamCard} teamId={teamId} />
+              })
+            }
+          </div>
+        </div>
       </div>
     );
   }
