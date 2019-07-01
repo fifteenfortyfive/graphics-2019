@@ -8,6 +8,12 @@ export function runTime(seconds) {
   return Duration.fromMillis(seconds * 1000).toFormat("hh:mm:ss");
 }
 
+export function runTimeFromStart(startString) {
+  return DateTime.utc()
+      .diff(DateTime.fromISO(startString, {zone: 'utc'}))
+      .toFormat("hh:mm:ss");
+}
+
 export function simpleDate(date) {
   return DateTime.fromISO(date).toLocaleString({
     year: 'numeric',

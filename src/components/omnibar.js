@@ -1,4 +1,4 @@
-import {h, Component, createRef} from 'preact';
+import {h, Component} from 'preact';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import _ from 'lodash';
@@ -8,51 +8,25 @@ import GamesList from './omni/games-list';
 import TeamsList from './omni/teams-list';
 import RunUpdate from './omni/run-update';
 import Sequenced from '../uikit/anim/sequenced';
-import {StretchReveal} from '../uikit/masks';
 
+import {RunUpdateTypes} from '../constants';
 import style from './omnibar.mod.css';
 
 class Omnibar extends Component {
   constructor(props) {
     super(props);
-    this.updateOverlayRef = createRef();
-    this.timeline = new TimelineMax({paused: true, autoRemoveChildren: true});
-
-    this.timeline
-        .eventCallback("onComplete", this.handleRunUpdateDisplayed.bind(this));
   }
 
-  componentDidUpdate(prevProps) {
-    const {runUpdate} = this.props;
-    // When the next update changes, show it
-    if(runUpdate && prevProps.runUpdate != runUpdate) {
-      this.showRunUpdate();
-    }
-  }
+  handleRunUpdateDisplayed(updateId) {
+    const {dispatch} = this.props;
 
-  showRunUpdate() {
-    const {runUpdate, dispatch} = this.props;
+    console.log("finished showing update", updateId)
 
-    this.timeline
-        .set(this.updateOverlayRef.current, {zIndex: 1})
-        .set("#updateClipRect", {scaleX: 0})
-        .to("#updateClipRect", 1.2, {scaleX: 1, ease: "Power4.easeInOut"})
-        .to("#updateClipRect", 1.2, {scaleX: 0, ease: "Power4.easeInOut"}, "+=5")
-        .play();
-  }
-
-  handleRunUpdateDisplayed() {
-    const {runUpdate, dispatch} = this.props;
-
-    dispatch(RunUpdateActions.runUpdateHandled(runUpdate.updateId));
+    dispatch(RunUpdateActions.runUpdateHandled(updateId));
   }
 
   render() {
     const {
-      runs,
-      accounts,
-      games,
-      teams,
       runUpdate,
       className,
       dispatch
@@ -66,19 +40,14 @@ class Omnibar extends Component {
         </div>
 
         <div class={style.content}>
-          <div ref={this.updateOverlayRef} class={style.updateOverlay}>
-            <StretchReveal
-                pathId="updateClipPath"
-                rectId="updateClipRect"
-                objectId="updateObject"
-              >
-              { runUpdate &&
-                <RunUpdate
-                  className={style.updateContent}
-                  update={runUpdate}
-                />
-              }
-            </StretchReveal>
+          <div class={style.updateOverlay}>
+            { runUpdate &&
+              <RunUpdate
+                className={style.updateContent}
+                update={runUpdate}
+                onComplete={this.handleRunUpdateDisplayed.bind(this)}
+              />
+            }
           </div>
           <Sequenced>
             <GamesList />
@@ -96,10 +65,6 @@ class Omnibar extends Component {
 };
 
 const mapStateToProps = (state) => ({
-  runs: state.runs,
-  accounts: state.accounts,
-  games: state.games,
-  teams: state.teams,
   runUpdate: state.runUpdateQueue[0],
 });
 

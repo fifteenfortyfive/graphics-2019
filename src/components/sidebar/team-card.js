@@ -79,7 +79,7 @@ const mapStateToProps = (state, props) => {
     .filter((r) => r.team_id == teamId)
     .value();
 
-  const currentRun = runs[teamId * 3 % runs.length];
+  const currentRun = runs[11];
   const runsByGame = _.keyBy(runs, 'game_id');
 
   return {

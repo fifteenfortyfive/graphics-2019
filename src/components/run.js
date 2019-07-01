@@ -1,60 +1,104 @@
-import {h, Fragment} from 'preact';
+import {h, Component, Fragment} from 'preact';
 import {connect} from 'react-redux';
 import classNames from 'classnames';
 
 import Avatar from './accounts/avatar';
 import ProgressBar from '../uikit/progress-bar';
 
-import { runTime } from '../util';
+import { runTime, runTimeFromStart } from '../util';
 import style from './run.mod.css';
 
-const Run = (props) => {
-  const {
-    game,
-    runner,
-    run,
-    team,
-    midRow = "game",
-    showProgressBar = false,
-    ready,
-    className
-  } = props;
+class Run extends Component {
+  renderMidRow() {
+    const {
+      midRow,
+      game,
+      team
+    } = this.props;
 
-  if(!ready) return null;
+    switch(midRow) {
+      case "team":
+        return (
+          <div class={style.teamName} style={{'--color': `#${team.color}`}}>{team.name}</div>
+        );
+      case "game":
+      default:
+        return (
+          <div class={style.gameName}>{game.name}</div>
+        );
+    }
+  }
 
-  const progress = 36;
+  renderTimeRow() {
+    const {
+      run,
+    } = this.props;
 
-  return (
-    <div class={classNames(style.run, className)}>
-      { ready
-        ? <Fragment>
-            <div class={style.runnerAvatar}>
-              <Avatar src={runner.avatar_object_id} size={48} />
-            </div>
-            <div class={style.runInfo}>
-              <div class={style.runnerName}>{runner.username}</div>
-              { midRow == "team" &&
-                <div class={style.teamName} style={{'--color': `#${team.color}`}}>{team.name}</div>
-              }
-              { midRow == "game" &&
-                <div class={style.gameName}>{game.name}</div>
-              }
-              <div class={style.detail}>
-                <span class={style.muted}>ESTIMATE: </span>
-                <span class={style.estimate}>{runTime(run.est_seconds)}</span>
+    if(run.actual_seconds) {
+      return (
+        <div class={style.detail}>
+          <span class={style.muted}>FINISHED: </span>
+          <span class={style.estimate}>{runTime(run.actual_seconds)}</span>
+        </div>
+      );
+    } else if(run.started_at) {
+      return (
+        <div class={style.detail}>
+          <span class={style.muted}>IN PROGRESS: </span>
+          <span class={style.estimate}>{runTimeFromStart(run.started_at)}</span>
+        </div>
+      );
+    } else {
+      return (
+        <div class={style.detail}>
+          <span class={style.muted}>ESTIMATE: </span>
+          <span class={style.estimate}>{runTime(run.est_seconds)}</span>
+        </div>
+      );
+    }
+
+  }
+
+  render() {
+    const {
+      game,
+      runner,
+      run,
+      team,
+      midRow = "game",
+      showProgressBar = false,
+      ready,
+      className
+    } = this.props;
+
+    if(!ready) return null;
+
+    const progress = 36;
+
+    return (
+      <div class={classNames(style.run, className)}>
+        { ready
+          ? <Fragment>
+              <div class={style.runnerAvatar}>
+                <Avatar src={runner.avatar_object_id} size={48} />
               </div>
-              { showProgressBar &&
-                <ProgressBar
-                  className={style.progress}
-                  progress={progress}
-                />
-              }
-            </div>
-          </Fragment>
-        : null
-      }
-    </div>
-  );
+              <div class={style.runInfo}>
+                <div class={style.runnerName}>{runner.username}</div>
+                {this.renderMidRow()}
+                {this.renderTimeRow()}
+                { showProgressBar &&
+                  <ProgressBar
+                    className={style.progress}
+                    progress={progress}
+                  />
+                }
+              </div>
+            </Fragment>
+          : null
+        }
+      </div>
+    );
+  }
 };
 
 const mapStateToProps = (state, props) => {

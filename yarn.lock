@@ -2980,10 +2980,10 @@ lru-cache@^4.0.1, lru-cache@^4.1.5:
     pseudomap "^1.0.2"
     yallist "^2.1.2"
 
-luxon@1.10.0:
-  version "1.10.0"
-  resolved "https://registry.yarnpkg.com/luxon/-/luxon-1.10.0.tgz#335b55e2fed50e09f869aee828897a3f67c7044e"
-  integrity sha512-ry3GKh//v3isD6oJN5pFWmdh+3GiScwv9q8VgG6fZ2j1guGOol2vVVdo4GBAWCrcq5RHOqSeipqHBnOu/u024Q==
+luxon@1.15.0:
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/luxon/-/luxon-1.15.0.tgz#d06643c437982332a3feff4ee7c718bdbbae09fd"
+  integrity sha512-HIpK4zIonObWHj9UC80ElykmM/0jTuuXcbPYBYbDGZ3Cq2bL9rACcmppoc6zm5JnmHpnK5bRMIp8/+ei4O0y2Q==
 
 magic-string@^0.22.4:
   version "0.22.5"

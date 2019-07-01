@@ -1,5 +1,10 @@
 export function receiveRunUpdate(data) {
-  const {run_id: runId, type, id: updateId} = data;
+  const {
+    run_id: runId,
+    type,
+    id: updateId,
+    extra
+  } = data;
 
   return {
     type: 'RECEIVE_RUN_UPDATE',
@@ -7,6 +12,7 @@ export function receiveRunUpdate(data) {
       runId,
       type,
       updateId,
+      extra
     }
   };
 }

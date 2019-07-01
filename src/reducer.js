@@ -2,6 +2,8 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import _ from 'lodash';
 
+import {RunUpdateTypes} from './constants';
+
 const defaultState = {
   me: {
     account: null,
@@ -221,13 +223,17 @@ const reducerActions = {
   'RECEIVE_RUN_UPDATE': (state, {data}) => {
     const {runId, updateId, type} = data;
 
-    return {
-      ...state,
-      runUpdateQueue: [
-        ...state.runUpdateQueue,
-        { type, runId, updateId }
-      ]
-    };
+    if(type == RunUpdateTypes.FINISHED) {
+      return {
+        ...state,
+        runUpdateQueue: [
+          ...state.runUpdateQueue,
+          { type, runId, updateId }
+        ]
+      };
+    } else {
+      return state;
+    }
   },
 
 
