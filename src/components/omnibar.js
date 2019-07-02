@@ -2,11 +2,13 @@ import {h, Component} from 'preact';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import {DateTime} from 'luxon';
 
 import * as RunUpdateActions from '../actions/run-updates';
 import GamesList from './omni/games-list';
 import TeamsList from './omni/teams-list';
 import RunUpdate from './omni/run-update';
+import LiveTimer from './live-timer';
 import Sequenced from '../uikit/anim/sequenced';
 
 import {RunUpdateTypes} from '../constants';
@@ -15,12 +17,12 @@ import style from './omnibar.mod.css';
 class Omnibar extends Component {
   constructor(props) {
     super(props);
+
+    this.startedAt = DateTime.utc().toISO();
   }
 
   handleRunUpdateDisplayed(updateId) {
     const {dispatch} = this.props;
-
-    console.log("finished showing update", updateId)
 
     dispatch(RunUpdateActions.runUpdateHandled(updateId));
   }
@@ -57,7 +59,10 @@ class Omnibar extends Component {
 
         <div class={style.timerBox}>
           <div class={style.timerDescription}>Event Time</div>
-          <div class={style.timer}>27:10:43</div>
+          <LiveTimer
+            className={style.timer}
+            startedAt={this.startedAt}
+          />
         </div>
       </div>
     );

@@ -19,7 +19,8 @@ const defaultState = {
   socket: {
     connected: false
   },
-  runUpdateQueue: []
+  runUpdateQueue: [],
+  tick: 0
 };
 
 const reducerActions = {
@@ -243,6 +244,13 @@ const reducerActions = {
     return {
       ...state,
       runUpdateQueue: _.reject(state.runUpdateQueue, {updateId})
+    };
+  },
+
+  'TIMER_TICK': (state, {data}) => {
+    return {
+      ...state,
+      tick: state.tick + 1
     };
   }
 }

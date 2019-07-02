@@ -25,7 +25,8 @@ class TeamCard extends Component {
       ready,
       team,
       currentRun,
-      runsByGame,
+      currentRunIndex,
+      sortedRuns,
       className
     } = this.props;
 
@@ -42,7 +43,7 @@ class TeamCard extends Component {
         <div class={style.cardHeader}>
           <h1 class={style.teamName}>{team.name}</h1>
           <p class={style.gameCount}>
-            Game 6/13
+            Game {currentRunIndex+1}/{sortedRuns.length}
           </p>
         </div>
         <div class={style.details}>
@@ -52,18 +53,7 @@ class TeamCard extends Component {
               runId={currentRun.id}
               showProgressBar={true}
             />
-          </div>{/*
-          <div class={style.section}>
-            <h2 class={style.sectionHeader}>Progress</h2>
-            { _.map(runsByGame, (run, game) => (
-                <RunGameRow
-                  className={style.gameRow}
-                  key={game.id}
-                  runId={run.id}
-                />
-              ))
-            }
-          </div>*/}
+          </div>
         </div>
       </div>
     );
@@ -79,12 +69,14 @@ const mapStateToProps = (state, props) => {
     .filter((r) => r.team_id == teamId)
     .value();
 
-  const currentRun = runs[11];
-  const runsByGame = _.keyBy(runs, 'game_id');
+  const sortedRuns = _.sortBy(runs, 'index');
+  const currentRunIndex = _.findIndex(sortedRuns, {'finished': false});
+  const currentRun = sortedRuns[currentRunIndex];
 
   return {
     team,
-    runsByGame,
+    sortedRuns,
+    currentRunIndex,
     currentRun,
     ready: !!team
   }

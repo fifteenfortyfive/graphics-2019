@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import classNames from 'classnames';
 
 import Avatar from './accounts/avatar';
+import LiveTimer from './live-timer';
 import ProgressBar from '../uikit/progress-bar';
 
 import { runTime, runTimeFromStart } from '../util';
@@ -45,7 +46,10 @@ class Run extends Component {
       return (
         <div class={style.detail}>
           <span class={style.muted}>IN PROGRESS: </span>
-          <span class={style.estimate}>{runTimeFromStart(run.started_at)}</span>
+          <LiveTimer
+            className={style.estimate}
+            startedAt={run.started_at}
+          />
         </div>
       );
     } else {

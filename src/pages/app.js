@@ -7,6 +7,7 @@ import * as EventActions from '../actions/events';
 import * as GameActions from '../actions/games';
 import * as RunActions from '../actions/runs';
 import * as TeamActions from '../actions/teams';
+import * as TimerActions from '../actions/timers';
 import * as WebSocketActions from '../actions/websocket';
 import Layout from '../components/layout';
 import Stream from '../components/stream';
@@ -28,12 +29,17 @@ class App extends Component {
   componentDidMount() {
     const {eventId, dispatch} = this.props;
     WebSocketActions.bindSocketToDispatch(dispatch);
+    TimerActions.startTimers(dispatch, 1000);
 
     dispatch(EventActions.fetchEvent(eventId));
     dispatch(TeamActions.fetchTeams(eventId));
     dispatch(AccountActions.fetchAccounts());
     dispatch(GameActions.fetchGames());
     dispatch(RunActions.fetchRuns(EVENT_ID, {}));
+  }
+
+  componentWillUnmount() {
+    TimerActions.stopTimers();
   }
 
   render() {
