@@ -24,7 +24,7 @@ export const getActiveRunIds = createSelector(
     return _.chain(teams)
       .map((team) => {
         const runs = sortedRunsByTeam[team.id];
-        return _.first(runs, (run) => run.started_at && !run.finished_at);
+        return _.find(runs, {'finished': false});
       })
       .map('id')
       .value();
