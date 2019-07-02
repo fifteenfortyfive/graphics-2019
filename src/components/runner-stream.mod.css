@@ -1,0 +1,10 @@
+@value brand, gray-700, black from '../style/theme.css';
+@value size-10, size-12, space-2, space-3 from '../style/theme.css';
+
+.container {
+  background-color: gray-700;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}

@@ -247,6 +247,15 @@ const reducerActions = {
     };
   },
 
+  'SET_FEATURED_RUN': (state, {data}) => {
+    const {runId} = data;
+
+    return {
+      ...state,
+      featuredRunId: runId
+    };
+  },
+
   'TIMER_TICK': (state, {data}) => {
     return {
       ...state,

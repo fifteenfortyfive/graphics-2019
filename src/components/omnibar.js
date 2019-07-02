@@ -58,7 +58,7 @@ class Omnibar extends Component {
         </div>
 
         <div class={style.timerBox}>
-          <div class={style.timerDescription}>Event Time</div>
+          {/*<div class={style.timerDescription}>Event Time</div>*/}
           <LiveTimer
             className={style.timer}
             startedAt={this.startedAt}

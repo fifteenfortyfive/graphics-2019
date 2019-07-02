@@ -10,6 +10,7 @@ import * as TeamActions from '../actions/teams';
 import * as TimerActions from '../actions/timers';
 import * as WebSocketActions from '../actions/websocket';
 import Layout from '../components/layout';
+import RunnerStream from '../components/runner-stream';
 import Stream from '../components/stream';
 import Run from '../components/run';
 import Omnibar from '../components/omnibar';
@@ -43,7 +44,13 @@ class App extends Component {
   }
 
   render() {
-    const {eventId, teams, runs, ready} = this.props;
+    const {
+      eventId,
+      teams,
+      runs,
+      featuredRunId,
+      ready
+    } = this.props;
 
     return (
       <Layout>
@@ -51,8 +58,8 @@ class App extends Component {
           ? <LoadingSpinner />
           : <div class={style.layoutContainer}>
               <div class={style.mainVideo}>
-                <Stream
-                  accountId={35}
+                <RunnerStream
+                  runId={featuredRunId}
                   quality={Stream.Qualities.SOURCE}
                 />
               </div>
@@ -79,6 +86,7 @@ const mapStateToProps = (state) => {
     eventId: EVENT_ID,
     event: state.events[EVENT_ID],
     teams: state.teams,
+    featuredRunId: state.featuredRunId,
     ready
   }
 };

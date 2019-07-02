@@ -11,7 +11,7 @@ import style from './stream.mod.css';
 
 // Set this to use thumbnails instead of interactive twitch players.
 // Reduces load times and helps React Dev Tools not break.
-const USE_STREAM_PLACEHOLDERS = true;
+const USE_STREAM_PLACEHOLDERS = false;
 
 const GLOBAL_PLAYER_OPTIONS = {
   width: "100%",
@@ -28,50 +28,43 @@ class Stream extends Component {
     this.player = null;
   }
 
+  shouldComponentUpdate(nextProps) {
+    const {twitchName} = this.props;
+
+    return twitchName != nextProps.twitchName;
+  }
+
   componentDidMount() {
     const { accountId, account, dispatch } = this.props;
 
-    if(account == null) {
-      dispatch(AccountActions.fetchAccount(accountId));
-    } else {
-      this.updateTwitchPlayer();
-    }
+    this.updateTwitchPlayer();
   }
 
-  componentDidUpdate(prevProps) {
-    const { accountId, account, dispatch } = this.props;
-
-    if(prevProps.accountId != accountId) {
-      dispatch(AccountActions.fetchAccount(accountId));
-    }
-
-    if(account != null) {
-      this.updateTwitchPlayer();
-    }
+  componentDidUpdate() {
+    this.updateTwitchPlayer();
   }
 
   updateTwitchPlayer() {
     if(USE_STREAM_PLACEHOLDERS) return null;
 
     const {
-      account,
+      twitchName,
       quality,
       pause,
       volume,
+      onStreamReady
     } = this.props;
-
-    const {twitch} = account;
-    const acceptableTwitch = twitch.toLowerCase();
 
     if(!this.player && !this.playerContainer.current) {
       return null;
     } else if(!this.player) {
       this.player = new Twitch.Player(this.playerContainerID, {...GLOBAL_PLAYER_OPTIONS});
       this.player.setVolume(0);
+      this.player.addEventListener(Twitch.Player.PLAYING, onStreamReady);
     }
 
 
-    this.player.setChannel(acceptableTwitch);
+    this.player.setChannel(twitchName);
     this.player.setQuality(quality);
     this.player.setVolume(volume);
 
@@ -83,41 +76,20 @@ class Stream extends Component {
   }
 
   renderStream() {
-    const {account, team, game} = this.props;
-
     return (
-      <Fragment>
-        <div
-          class={style.playerContainer}
-          id={this.playerContainerID}
-          ref={this.playerContainer}
-        >
-        </div>
-{/*        <div class={style.overlayContainer}>
-          <div class={style.overlay}>
-            <div class={style.runnerOverlay}>
-              <Avatar
-                className={style.runnerAvatar}
-                src={account.avatar_object_id}
-                size={16}
-              />
-              {account.username} - {team.name} - {game.name}
-            </div>
-          </div>
-        </div>*/}
-      </Fragment>
+      <div
+        class={style.playerContainer}
+        id={this.playerContainerID}
+        ref={this.playerContainer}
+      >
+      </div>
     );
   }
 
   renderPlaceholder() {
-    const { account } = this.props;
+    const { twitchName } = this.props;
 
-    if(account == null) return null;
-
-    const { twitch } = account;
-    const acceptableTwitch = twitch.toLowerCase();
-
-    const thumbSrc = `https://static-cdn.jtvnw.net/previews-ttv/live_user_${acceptableTwitch}-320x180.jpg`;
+    const thumbSrc = `https://static-cdn.jtvnw.net/previews-ttv/live_user_${twitchName}-320x180.jpg`;
 
     return (
       <div class={style.playerContainer}>
@@ -127,15 +99,14 @@ class Stream extends Component {
   }
 
   render() {
-    const {account, loadingAccount} = this.props;
-
+    const {twitchName} = this.props;
     return (
       <div class={style.stream}>
-        { loadingAccount
-          ? <LoadingSpinner />
-          : USE_STREAM_PLACEHOLDERS
+        { twitchName
+          ? USE_STREAM_PLACEHOLDERS
             ? this.renderPlaceholder()
             : this.renderStream()
+          : <LoadingSpinner />
         }
       </div>
     );
@@ -153,15 +124,15 @@ Stream.Qualities = {
 
 
 const mapStateToProps = (state, props) => {
-  const {accountId} = props;
-  const teamsA = Object.values(state.teams);
-  const gamesA = Object.values(state.games);
+  const {runId} = props;
+
+  const run = state.runs[runId];
+  const account = run && state.accounts[run.account_id];
+
+  const twitchName = account && account.twitch && account.twitch.toLowerCase();
 
   return {
-    account: state.accounts[accountId],
-    team: teamsA[accountId % teamsA.length],
-    game: gamesA[accountId % gamesA.length],
-    loadingAccount: state.fetching[`accounts.${accountId}`]
+    twitchName
   };
 };
 
