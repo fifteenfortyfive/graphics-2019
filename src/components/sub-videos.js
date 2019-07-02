@@ -8,7 +8,6 @@ import * as FeaturedStreamActions from '../actions/featured-runs';
 import RunnerStream from './runner-stream';
 import Stream from './stream';
 import LoadingSpinner from '../uikit/loading-spinner';
-import FeaturedIndicator from '../uikit/featured-indicator';
 
 import {getActiveRunIds, getSortedTeams} from '../selectors/active-runs';
 
@@ -16,7 +15,7 @@ import style from './sub-videos.mod.css';
 
 // Evenly split feature time across the 7 teams.
 // Could be dynamic but meh.
-const ROTATION_TIME = Math.floor(20 * 1000);
+const ROTATION_TIME = Math.floor(10 * 1000);
 
 class SubVideos extends Component {
   constructor(props) {
@@ -68,18 +67,16 @@ class SubVideos extends Component {
 
   renderElement(runId) {
     const {featuredRunId} = this.props;
-    const isFeatured = runId === featuredRunId;
-    if(isFeatured) {
-      return <FeaturedIndicator />;
-    } else {
-      return (
-        <RunnerStream
-          runId={runId}
-          quality={Stream.Qualities.VERY_LOW}
-          volume={0}
-        />
-      );
-    }
+
+    return (
+      <RunnerStream
+        runId={runId}
+        isFeatured={runId == featuredRunId}
+        includeFeaturedIndicator={true}
+        quality={Stream.Qualities.VERY_LOW}
+        volume={0}
+      />
+    );
   }
 
   render() {

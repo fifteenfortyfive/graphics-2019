@@ -31,7 +31,7 @@ class Stream extends Component {
   shouldComponentUpdate(nextProps) {
     const {twitchName} = this.props;
 
-    return twitchName != nextProps.twitchName;
+    return twitchName !== nextProps.twitchName;
   }
 
   componentDidMount() {
@@ -47,6 +47,7 @@ class Stream extends Component {
   updateTwitchPlayer() {
     if(USE_STREAM_PLACEHOLDERS) return null;
 
+
     const {
       twitchName,
       quality,
@@ -54,6 +55,8 @@ class Stream extends Component {
       volume,
       onStreamReady
     } = this.props;
+
+    if(twitchName == null) return null;
 
     if(!this.player && !this.playerContainer.current) {
       return null;
@@ -102,7 +105,7 @@ class Stream extends Component {
     const {twitchName} = this.props;
     return (
       <div class={style.stream}>
-        { twitchName
+        { twitchName != null
           ? USE_STREAM_PLACEHOLDERS
             ? this.renderPlaceholder()
             : this.renderStream()

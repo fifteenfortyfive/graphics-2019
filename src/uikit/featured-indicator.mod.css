@@ -1,16 +1,18 @@
-@value white, size-20 from '../style/theme.css';
+@value white, gray-500, size-14 from '../style/theme.css';
 
 .container {
+  --color: gray-700;
   display: flex;
-  width: 100%;
-  height: 100%;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color);
 }
 
 @keyframes pulse {
   0% {
-    opacity: 0.6;
+    opacity: 0.8;
   }
 
   50% {
@@ -18,13 +20,11 @@
   }
 
   100% {
-    opacity: 0.6;
+    opacity: 0.8;
   }
 }
 
-.spinner {
-  color: white;
-  animation: pulse 5s infinite linear;
+.content {
+  font-size: size-14;
+  line-height: 1.2;
 }
-
-

@@ -60,6 +60,8 @@ class App extends Component {
               <div class={style.mainVideo}>
                 <RunnerStream
                   runId={featuredRunId}
+                  isFeatured={false}
+                  includeFeaturedIndicator={false}
                   quality={Stream.Qualities.SOURCE}
                 />
               </div>
