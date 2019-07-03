@@ -34,11 +34,9 @@ class RunnerStream extends Component {
     const becameFeatured = (!isFeatured && nextProps.isFeatured);
 
     if(runId != nextProps.runId) {
-      this.setState({ animatingOut: true });
       this.animateOut();
       return false;
     } else if(becameFeatured) {
-      this.setState({ animatingOut: true });
       this.animateOut();
       return false;
     }
@@ -68,8 +66,10 @@ class RunnerStream extends Component {
   }
 
   animateOut() {
+    this.setState({ animatingOut: true });
+
     this.timeline
-        .to(this.container.current, 1.2, {yPercent: 80, opacity: 0, ease: "Power3.easeIn"})
+        .to(this.container.current, 3, {yPercent: 80, opacity: 0, ease: "Power4.easeIn"})
         .addCallback(() => this.setState({animatingOut: false}))
         .play();
   }
@@ -86,7 +86,11 @@ class RunnerStream extends Component {
         }
         { !isFeatured &&
           <div ref={this.container} class={style.streamHolder}>
-            <Stream {...this.props} onStreamReady={() => this.animateIn()} />
+            <Stream
+              {...this.props}
+              onStreamReady={() => this.animateIn()}
+              onStreamUnready={() => this.animateOut()}
+            />
           </div>
         }
       </div>

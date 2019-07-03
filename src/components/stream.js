@@ -53,7 +53,8 @@ class Stream extends Component {
       quality,
       pause,
       volume,
-      onStreamReady
+      onStreamReady,
+      onStreamUnready
     } = this.props;
 
     if(twitchName == null) return null;
@@ -64,6 +65,8 @@ class Stream extends Component {
       this.player = new Twitch.Player(this.playerContainerID, {...GLOBAL_PLAYER_OPTIONS});
       this.player.setVolume(0);
       this.player.addEventListener(Twitch.Player.PLAYING, onStreamReady);
+      this.player.addEventListener(Twitch.Player.OFFLINE, onStreamUnready);
+      this.player.addEventListener(Twitch.Player.ENDED, onStreamUnready);
     }
 
 
