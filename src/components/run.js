@@ -2,11 +2,12 @@ import {h, Component, Fragment} from 'preact';
 import {connect} from 'react-redux';
 import classNames from 'classnames';
 
+import {getRun, getRunProgress} from '../selectors/runs';
 import Avatar from './accounts/avatar';
 import LiveTimer from './live-timer';
 import ProgressBar from '../uikit/progress-bar';
 
-import { runTime, runTimeFromStart } from '../util';
+import { runTime } from '../util';
 import style from './run.mod.css';
 
 class Run extends Component {
@@ -71,13 +72,12 @@ class Run extends Component {
       team,
       midRow = "game",
       showProgressBar = false,
+      progress,
       ready,
       className
     } = this.props;
 
     if(!ready) return null;
-
-    const progress = 36;
 
     return (
       <div class={classNames(style.run, className)}>
@@ -108,16 +108,18 @@ class Run extends Component {
 const mapStateToProps = (state, props) => {
   const {runId} = props;
 
-  const run = state.runs[runId];
+  const run = getRun(state, props);
   const game = run && state.games[run.game_id];
   const team = run && state.teams[run.team_id];
   const runner = run && state.accounts[run.account_id];
+  const progress = run ? getRunProgress(state, props) : 0;
 
   return {
     run,
     game,
     runner,
     team,
+    progress,
     ready: run && runner && game && team
   }
 }

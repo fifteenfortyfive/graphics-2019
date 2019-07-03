@@ -1,7 +1,7 @@
 import {h} from 'preact';
 import {connect} from 'react-redux';
 
-import {runTimeFromStart} from '../util';
+import {diffSeconds, runTime, timeFromISO} from '../util';
 
 const LiveTimer = (props) => {
   const {
@@ -12,14 +12,12 @@ const LiveTimer = (props) => {
   return <span class={className}>{elapsedTime}</span>;
 }
 
-// tick is included to make sure the component re-renders
-// on every tick.
 const mapStateToProps = (state, props) => {
   const {startedAt} = props;
+  const {currentTime} = state;
 
   return {
-    elapsedTime: runTimeFromStart(startedAt),
-    tick: state.tick,
+    elapsedTime: runTime(diffSeconds(currentTime, timeFromISO(startedAt))),
   };
 };
 

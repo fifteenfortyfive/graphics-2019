@@ -6,9 +6,19 @@ import _ from 'lodash';
 import * as AccountActions from '../../actions/accounts';
 import * as RunActions from '../../actions/runs';
 import * as TeamActions from '../../actions/teams';
+import {
+  getActiveRun,
+  getSortedRunsForTeam
+} from '../../selectors/active-runs';
+import {
+  getTeam,
+  getTeamProgress,
+  isTeamFinished
+} from '../../selectors/teams';
 import Run from '../run';
 import RunGameRow from './run-game-row';
 import LoadingSpinner from '../../uikit/loading-spinner';
+import ProgressBar from '../../uikit/progress-bar';
 
 import { EVENT_ID } from '../../constants';
 import style from './team-card.mod.css';
@@ -25,8 +35,8 @@ class TeamCard extends Component {
       ready,
       team,
       currentRun,
-      currentRunIndex,
       sortedRuns,
+      progress,
       className
     } = this.props;
 
@@ -43,7 +53,7 @@ class TeamCard extends Component {
         <div class={style.cardHeader}>
           <h1 class={style.teamName}>{team.name}</h1>
           <p class={style.gameCount}>
-            Game {currentRunIndex+1}/{sortedRuns.length}
+            Game {currentRun.index}/{sortedRuns.length}
           </p>
         </div>
         <div class={style.details}>
@@ -55,6 +65,7 @@ class TeamCard extends Component {
             />
           </div>
         </div>
+        <ProgressBar progress={progress} />
       </div>
     );
   }
@@ -63,21 +74,16 @@ class TeamCard extends Component {
 const mapStateToProps = (state, props) => {
   const { teamId } = props;
 
-  const team = state.teams[teamId];
-
-  const runs = _.chain(Object.values(state.runs))
-    .filter((r) => r.team_id == teamId)
-    .value();
-
-  const sortedRuns = _.sortBy(runs, 'index');
-  const currentRunIndex = _.findIndex(sortedRuns, {'finished': false});
-  const currentRun = sortedRuns[currentRunIndex];
+  const team = getTeam(state, props);
+  const sortedRuns = getSortedRunsForTeam(state, props);
+  const currentRun = getActiveRun(sortedRuns);
+  const progress = getTeamProgress(state, props);
 
   return {
     team,
     sortedRuns,
-    currentRunIndex,
     currentRun,
+    progress,
     ready: !!team
   }
 };

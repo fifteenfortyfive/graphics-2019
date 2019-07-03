@@ -54,13 +54,3 @@ export function getThumbnailURL(urlTemplate, width, height) {
       .replace("{width}", width)
       .replace("{height}", height);
 };
-
-// Override of reselect's default memoized selector to just memoize
-// everything instead.
-export const createSelector = createSelectorCreator(
-  _.memoize,
-  (...args) => args.reduce(
-    (acc, val) => acc + '-' + JSON.stringify(val),
-    ''
-  )
-);

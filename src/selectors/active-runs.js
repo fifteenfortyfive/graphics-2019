@@ -1,8 +1,14 @@
-import {createSelector} from '../util';
+import {createSelector} from 'reselect';
+import createCachedSelector from 're-reselect';
 import _ from 'lodash';
 
+import {
+  getSortedTeams,
+  getTeam,
+  getTeamId
+} from './teams';
+
 const getRuns = (state) => state.runs;
-const getTeams = (state) => state.teams;
 
 export const getSortedRunsByTeam = createSelector(
   [getRuns],
@@ -12,14 +18,17 @@ export const getSortedRunsByTeam = createSelector(
       .value()
 );
 
-export const getSortedTeams = createSelector(
-  [getTeams],
-  (teams) => _.sortBy(teams, 'id')
-);
+export const getSortedRunsForTeam = createCachedSelector(
+  [getSortedRunsByTeam, getTeamId],
+  (runs, teamId) => {
+    return runs[teamId];
+  }
+)(getTeamId);
 
 
-function getActiveRun(runs) {
-  return _.find(runs, (run) => !run.finished);
+export function getActiveRun(runs) {
+  return _.find(runs, (run) => !run.finished)
+      || runs[runs.length-1];
 }
 
 export const getActiveRunIds = createSelector(

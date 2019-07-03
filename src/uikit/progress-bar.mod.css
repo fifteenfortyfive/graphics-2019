@@ -3,7 +3,7 @@
 @value font-mono from '../style/theme.css';
 
 .progressBarContainer {
-  --progress: 0;
+  --progress: 0%;
   width: 100%;
   height: 4px;
   background-color: gray-600;
@@ -16,4 +16,6 @@
   width: var(--progress);
   background-color: var(--color);
   border-radius: radius-1;
+
+  transition: width 0.5s ease-in-out;
 }
