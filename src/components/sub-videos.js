@@ -23,6 +23,8 @@ class SubVideos extends Component {
 
     this.rotationIntervalID = null;
 
+    this.rotateFeatured = this._rotateFeatured.bind(this);
+
     this.state = {
       featuredIndex: 0,
       featuredId: null
@@ -53,7 +55,7 @@ class SubVideos extends Component {
     }
   }
 
-  rotateFeatured() {
+  _rotateFeatured() {
     const {activeRunIds, dispatch} = this.props;
     const newFeaturedIndex = (this.state.featuredIndex + 1) % activeRunIds.length;
     const newFeaturedRunId = activeRunIds[newFeaturedIndex];
@@ -74,6 +76,7 @@ class SubVideos extends Component {
         isFeatured={runId == featuredRunId}
         includeFeaturedIndicator={true}
         quality={Stream.Qualities.LOW}
+        onStreamLost={this.rotateFeatured}
         volume={0}
       />
     );

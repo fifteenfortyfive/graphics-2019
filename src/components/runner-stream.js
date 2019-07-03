@@ -20,6 +20,8 @@ class RunnerStream extends Component {
     this.animateIn  = this._animateIn.bind(this);
     this.animateOut = this._animateOut.bind(this);
     this.handleAnimatedOut = this._handleAnimatedOut.bind(this);
+    this.handleStreamReady = this._handleStreamReady.bind(this);
+    this.handleStreamLost  = this._handleStreamLost.bind(this);
   }
 
   componentDidMount() {
@@ -82,6 +84,22 @@ class RunnerStream extends Component {
         .play();
   }
 
+  _handleStreamReady() {
+    const {onStreamReady} = this.props;
+    this.animateIn();
+    if(onStreamReady) {
+      onStreamReady();
+    }
+  }
+
+  _handleStreamLost() {
+    const {onStreamLost} = this.props;
+    this.animateOut();
+    if(onStreamLost) {
+      onStreamLost();
+    }
+  }
+
   render() {
     const {runId, isFeatured, includeFeaturedIndicator} = this.props;
     return (
@@ -96,8 +114,8 @@ class RunnerStream extends Component {
           <div ref={this.container} class={style.streamHolder}>
             <Stream
               {...this.props}
-              onStreamReady={this.animateIn}
-              onStreamUnready={this.animateOut}
+              onStreamReady={this.handleStreamReady}
+              onStreamUnready={this.handleStreamLost}
             />
           </div>
         }
