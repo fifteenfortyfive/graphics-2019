@@ -76,7 +76,6 @@ class SubVideos extends Component {
         isFeatured={runId == featuredRunId}
         includeFeaturedIndicator={true}
         quality={Stream.Qualities.LOW}
-        onStreamLost={this.rotateFeatured}
         volume={0}
       />
     );

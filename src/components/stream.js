@@ -66,7 +66,6 @@ class Stream extends Component {
       this.player.setVolume(0);
       this.player.addEventListener(Twitch.Player.PLAYING, onStreamReady);
       this.player.addEventListener(Twitch.Player.OFFLINE, onStreamUnready);
-      this.player.addEventListener(Twitch.Player.ENDED, onStreamUnready);
     }
 
 
