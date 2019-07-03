@@ -15,8 +15,8 @@ class GameResults extends Component {
     this.container  = createRef();
     this.header     = createRef();
     this.banner     = createRef();
-    this.timeline       = new TimelineMax({paused: true});
-    this.childTimeline  = new TimelineMax();
+    this.timeline       = new TimelineMax({paused: true, autoRemoveChildren: true});
+    this.childTimeline  = new TimelineMax({autoRemoveChildren: true});
   }
 
   componentDidMount() {

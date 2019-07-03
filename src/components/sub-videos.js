@@ -73,7 +73,7 @@ class SubVideos extends Component {
         runId={runId}
         isFeatured={runId == featuredRunId}
         includeFeaturedIndicator={true}
-        quality={Stream.Qualities.VERY_LOW}
+        quality={Stream.Qualities.LOW}
         volume={0}
       />
     );

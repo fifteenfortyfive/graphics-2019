@@ -18,13 +18,17 @@ export const getSortedTeams = createSelector(
 );
 
 
+function getActiveRun(runs) {
+  return _.find(runs, (run) => !run.finished);
+}
+
 export const getActiveRunIds = createSelector(
   [getSortedRunsByTeam, getSortedTeams],
   (sortedRunsByTeam, teams) => {
     return _.chain(teams)
       .map((team) => {
         const runs = sortedRunsByTeam[team.id];
-        return _.find(runs, {'finished': false});
+        return getActiveRun(runs);
       })
       .map('id')
       .value();

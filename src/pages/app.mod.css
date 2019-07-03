@@ -1,4 +1,4 @@
-@value black, gray-500, gray-700 from '../style/theme.css';
+@value black, gray-500, gray-700, gray-800 from '../style/theme.css';
 @value space-1, space-2, space-3, space-4 from '../style/theme.css';
 
 .layoutContainer {
@@ -14,12 +14,12 @@
 .mainVideo {
   grid-area: mainvideo;
   overflow: hidden;
-  background-color: black;
+  background-color: gray-800;
 }
 
 .sidebar {
   grid-area: sidebar;
-  background-color: black;
+  background-color: gray-800;
 }
 
 .subVideos {
@@ -28,7 +28,7 @@
 
 .other {
   grid-area: other;
-  background-color: black;
+  background-color: gray-800;
 }
 
 

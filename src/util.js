@@ -4,6 +4,14 @@ import { createSelectorCreator } from 'reselect'
 import _ from 'lodash'
 
 
+export function timeFromISO(isoString) {
+  return DateTime.fromISO(isoString, {zone: 'utc'});
+}
+
+export function diffSeconds(end, start) {
+  return end.diff(start).as('seconds');
+}
+
 export function runTime(seconds) {
   return Duration.fromMillis(seconds * 1000).toFormat("hh:mm:ss");
 }

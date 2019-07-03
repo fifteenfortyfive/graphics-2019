@@ -1,6 +1,7 @@
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import _ from 'lodash';
+import {DateTime} from 'luxon';
 
 import {RunUpdateTypes} from './constants';
 
@@ -20,7 +21,8 @@ const defaultState = {
     connected: false
   },
   runUpdateQueue: [],
-  tick: 0
+  tick: 0,
+  currentTime: DateTime.utc(),
 };
 
 const reducerActions = {
@@ -257,9 +259,11 @@ const reducerActions = {
   },
 
   'TIMER_TICK': (state, {data}) => {
+    const {currentTime} = data;
     return {
       ...state,
-      tick: state.tick + 1
+      tick: state.tick + 1,
+      currentTime
     };
   }
 }

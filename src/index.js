@@ -12,4 +12,4 @@ render(
   </Provider>
 , document.querySelector('#app-container'));
 
-import 'preact/debug';
+// import 'preact/debug';

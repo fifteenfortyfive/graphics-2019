@@ -15,7 +15,11 @@ class RunnerStream extends Component {
     }
 
     this.container = createRef();
-    this.timeline = new TimelineMax({paused: true, autoRemoveChildren: true})
+    this.timeline = new TimelineMax({paused: true, autoRemoveChildren: true});
+
+    this.animateIn  = this._animateIn.bind(this);
+    this.animateOut = this._animateOut.bind(this);
+    this.handleAnimatedOut = this._handleAnimatedOut.bind(this);
   }
 
   componentDidMount() {
@@ -55,22 +59,26 @@ class RunnerStream extends Component {
 
   prepareAnimateIn() {
     this.timeline
-        .set(this.container.current, {yPercent: 80, opacity: 0})
+        .set(this.container.current, {yPercent: 105, opacity: 0})
         .play();
   }
 
-  animateIn() {
+  _handleAnimatedOut() {
+    this.setState({animatingOut: false});
+  }
+
+  _animateIn() {
     this.timeline
-        .fromTo(this.container.current, 1.2, {yPercent: 80, opacity: 0}, {yPercent: 0, opacity: 1, ease: "Power3.easeOut"})
+        .fromTo(this.container.current, 1.2, {yPercent: 105, opacity: 0}, {yPercent: 0, opacity: 1, ease: "Power3.easeOut"})
         .play();
   }
 
-  animateOut() {
+  _animateOut() {
     this.setState({ animatingOut: true });
 
     this.timeline
-        .to(this.container.current, 3, {yPercent: 80, opacity: 0, ease: "Power4.easeIn"})
-        .addCallback(() => this.setState({animatingOut: false}))
+        .to(this.container.current, 2, {yPercent: 105, opacity: 0, ease: "Power4.easeIn"})
+        .addCallback(this.handleAnimatedOut)
         .play();
   }
 
@@ -88,8 +96,8 @@ class RunnerStream extends Component {
           <div ref={this.container} class={style.streamHolder}>
             <Stream
               {...this.props}
-              onStreamReady={() => this.animateIn()}
-              onStreamUnready={() => this.animateOut()}
+              onStreamReady={this.animateIn}
+              onStreamUnready={this.animateOut}
             />
           </div>
         }

@@ -29,9 +29,10 @@ class Stream extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    const {twitchName} = this.props;
+    const {twitchName, show} = this.props;
 
-    return twitchName !== nextProps.twitchName;
+    return twitchName !== nextProps.twitchName
+        || show !== nextProps.show;
   }
 
   componentDidMount() {
@@ -51,7 +52,6 @@ class Stream extends Component {
     const {
       twitchName,
       quality,
-      pause,
       volume,
       onStreamReady,
       onStreamUnready
@@ -73,12 +73,6 @@ class Stream extends Component {
     this.player.setChannel(twitchName);
     this.player.setQuality(quality);
     this.player.setVolume(volume);
-
-    if(pause && !this.player.isPaused()) {
-      this.player.pause();
-    } else if(!pause && this.player.isPaused()) {
-      this.player.play();
-    }
   }
 
   renderStream() {
@@ -108,11 +102,9 @@ class Stream extends Component {
     const {twitchName} = this.props;
     return (
       <div class={style.stream}>
-        { twitchName != null
-          ? USE_STREAM_PLACEHOLDERS
-            ? this.renderPlaceholder()
-            : this.renderStream()
-          : <LoadingSpinner />
+        { USE_STREAM_PLACEHOLDERS
+          ? this.renderPlaceholder()
+          : this.renderStream()
         }
       </div>
     );
