@@ -31,7 +31,7 @@ const getTeamOriginalEstimate = createCachedSelector(
 
 const getTeamLiveEstimate = createCachedSelector(
   [getTeamRuns],
-  (runs) => _.sumBy(runs, (run) => run.actual_seconds || run.est_seconds)
+  (runs) => _.sumBy(runs, (run) => run.actual_seconds || run.est_seconds || 0)
 )(getTeamId);
 
 const getTeamCurrentRunTime = createCachedSelector(

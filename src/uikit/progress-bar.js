@@ -10,10 +10,8 @@ const ProgressBar = (props) => {
   } = props;
 
   return (
-    <div class={classNames(style.progress, className)}>
-      <div class={style.progressBarContainer}>
-        <div class={style.progressBar} style={{'--progress': `${progress}%`}} />
-      </div>
+    <div class={classNames(style.progressBarContainer, className)}>
+      <div class={style.progressBar} style={{'--progress': `${progress}%`}} />
     </div>
   );
 };

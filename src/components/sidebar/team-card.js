@@ -65,7 +65,10 @@ class TeamCard extends Component {
             />
           </div>
         </div>
-        <ProgressBar progress={progress} />
+        <ProgressBar
+          className={style.teamProgress}
+          progress={progress}
+        />
       </div>
     );
   }

@@ -19,16 +19,12 @@ class Sidebar extends Component {
     } = this.props;
 
     return (
-      <div
-          class={classNames(style.container, className)}
-        >
-        <div class={style.section}>
-          <div class={style.teamCards}>
-            { _.map(teamIds, (teamId) => {
-                return <TeamCard className={style.teamCard} teamId={teamId} />
-              })
-            }
-          </div>
+      <div class={classNames(style.container, className)}>
+        <div class={style.teamCards}>
+          { _.map(teamIds, (teamId) => {
+              return <TeamCard className={style.teamCard} teamId={teamId} />
+            })
+          }
         </div>
       </div>
     );
