@@ -1,0 +1,21 @@
+@value space-2, space-3 from '../style/theme.css';
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: space-3;
+  grid-auto-flow: row dense;
+  width: 1280px;
+  padding: space-2;
+  margin: space-3 auto;
+}
+
+.socketStatus {
+  grid-column: span 1;
+  grid-row: span 1;
+}
+
+.rawState {
+  grid-column: span 4;
+  grid-row: span 1;
+}

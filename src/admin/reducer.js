@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import _ from 'lodash';
 import {DateTime} from 'luxon';
 
-import {RunUpdateTypes} from './constants';
+import {RunUpdateTypes} from '../constants';
 
 const defaultState = {
   accounts: {},
@@ -15,9 +15,7 @@ const defaultState = {
   socket: {
     connected: false
   },
-  runUpdateQueue: [],
-  tick: 0,
-  currentTime: DateTime.utc(),
+  streamState: {},
 };
 
 const reducerActions = {
@@ -163,47 +161,11 @@ const reducerActions = {
     }
   },
 
-  'RECEIVE_RUN_UPDATE': (state, {data}) => {
-    const {runId, updateId, type} = data;
-
-    if(type == RunUpdateTypes.FINISHED) {
-      return {
-        ...state,
-        runUpdateQueue: [
-          ...state.runUpdateQueue,
-          { type, runId, updateId }
-        ]
-      };
-    } else {
-      return state;
-    }
-  },
-
-
-  'RUN_UPDATE_HANDLED': (state, {data}) => {
-    const {updateId} = data;
-
+  'RECEIVE_STREAM_STATE': (state, {data}) => {
+    const {state: streamState} = data;
     return {
       ...state,
-      runUpdateQueue: _.reject(state.runUpdateQueue, {updateId})
-    };
-  },
-
-  'SET_FEATURED_RUN': (state, {data}) => {
-    const {runId} = data;
-
-    return {
-      ...state,
-      featuredRunId: runId
-    };
-  },
-
-  'TIMER_TICK': (state, {data}) => {
-    const {currentTime} = data;
-    return {
-      ...state,
-      tick: state.tick + 1,
-      currentTime
+      streamState,
     };
   }
 }
@@ -214,4 +176,4 @@ export function reducer(state = defaultState, action) {
   return newState;
 }
 
-export const store = createStore(reducer, applyMiddleware(thunk));
+export const adminStore = createStore(reducer, applyMiddleware(thunk));

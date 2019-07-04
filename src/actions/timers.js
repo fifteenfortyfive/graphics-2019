@@ -3,7 +3,9 @@ import {DateTime} from 'luxon';
 let intervalID = null;
 
 export function startTimers(dispatch, interval = 1000) {
-  intervalID = setInterval(() => dispatch(tick(DateTime.utc())), interval);
+  intervalID = setInterval(() => {
+    dispatch(tick(DateTime.utc()));
+  }, interval);
 }
 
 export function stopTimers(interval) {

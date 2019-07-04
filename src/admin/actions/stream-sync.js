@@ -1,10 +1,7 @@
 import ReconnectingWebSocket from 'reconnecting-websocket';
 import queryString from 'query-string';
 
-import * as RunActions from './runs';
-import * as RunUpdateActions from './run-updates';
-
-const SOCKET_PATH = '/api/live/stream';
+const SOCKET_PATH = '/api/live/admin';
 function getSocketURL() {
   const {socket_host} = queryString.parse(window.location.search);
 
@@ -21,15 +18,15 @@ const SOCKET = new ReconnectingWebSocket(getSocketURL());
 
 export function bindSocketToDispatch(dispatch) {
   SOCKET.onopen = function(event) {
-    console.log("Stream Socket connected");
+    console.log("Sync Socket connected");
     dispatch(streamSocketOpened());
   };
   SOCKET.onclose = function(event) {
-    console.log("Stream Socket closed. Reconnecting...");
+    console.log("Sync Socket closed. Reconnecting...");
     dispatch(streamSocketClosed());
   };
   SOCKET.onerror = function(event) {
-    console.log("Stream Socket errored. Reconnecting...");
+    console.log("Sync Socket errored. Reconnecting...");
     dispatch(streamSocketClosed());
   };
   SOCKET.onmessage = function(event) {
@@ -37,27 +34,16 @@ export function bindSocketToDispatch(dispatch) {
   };
 };
 
-export function syncStateToServer(state) {
-  SOCKET.send(JSON.stringify({
-    type: 'state_sync',
-    data: state
-  }));
-}
-
 
 
 function handleSocketUpdate(dispatch, event) {
   const data = JSON.parse(event.data);
 
-  const {type} = data;
+  const {type, data: state} = data;
 
   switch(type) {
-    case 'run_started':
-    case 'run_finished':
-    case 'run_resumed':
-    case 'run_restarted':
-      dispatch(RunActions.fetchRun(data.run_id));
-      dispatch(RunUpdateActions.receiveRunUpdate(data));
+    case 'state_sync':
+      dispatch(receiveStreamState(state));
       return;
     default:
       return;
@@ -65,6 +51,14 @@ function handleSocketUpdate(dispatch, event) {
 };
 
 
+export function receiveStreamState(state) {
+  return {
+    type: 'RECEIVE_STREAM_STATE',
+    data: {
+      state
+    }
+  };
+}
 
 export function streamSocketOpened() {
   return {

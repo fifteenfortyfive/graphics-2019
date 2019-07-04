@@ -46,8 +46,6 @@ class App extends Component {
   render() {
     const {
       eventId,
-      teams,
-      runs,
       featuredRunId,
       ready
     } = this.props;
@@ -86,8 +84,6 @@ const mapStateToProps = (state) => {
 
   return {
     eventId: EVENT_ID,
-    event: state.events[EVENT_ID],
-    teams: state.teams,
     featuredRunId: state.featuredRunId,
     ready
   }

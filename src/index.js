@@ -1,15 +1,31 @@
 import { h, render } from 'preact';
 import { Provider, connect } from 'react-redux';
+
 import App from './pages/app';
+import StateSync from './pages/state-sync';
 import {store} from './reducer';
+
+import Admin from './admin/admin';
+import {adminStore} from './admin/reducer';
 
 import './style/reset.css';
 import './style/theme.css';
 
-render(
-  <Provider store={store}>
-    <App />
-  </Provider>
-, document.querySelector('#app-container'));
 
-// import 'preact/debug';
+if(window.location.pathname === '/admin') {
+  render(
+    <Provider store={adminStore}>
+      <Admin />
+    </Provider>
+  , document.querySelector('#app-container'));
+  // import 'preact/debug';
+} else {
+  render(
+    <Provider store={store}>
+      <App />
+      <StateSync />
+    </Provider>
+  , document.querySelector('#app-container'));
+  // import 'preact/debug';
+}
+

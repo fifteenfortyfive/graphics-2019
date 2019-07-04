@@ -20,6 +20,7 @@
     "query-string": "^6.8.1",
     "re-reselect": "^3.3.0",
     "react-gsap": "^1.2.0",
+    "react-json-view": "^1.19.1",
     "react-redux": "^7.1.0",
     "reconnecting-websocket": "^4.1.10",
     "redux": ">=2",
