@@ -4,8 +4,8 @@ import {connect} from 'react-redux';
 import * as WebSocketActions from '../actions/websocket';
 import {getCurrentTimeWithAccuracy} from '../selectors/time';
 
-// 8 seconds is essentially real-time. This might be too chatty.
-const SYNC_INTERVAL = 8 * 1000;
+// 3 seconds is essentially real-time. This might be too chatty.
+const SYNC_INTERVAL = 3 * 1000;
 
 class StateSync extends Component {
   constructor(props) {
