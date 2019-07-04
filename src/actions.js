@@ -42,7 +42,15 @@ export function parseJSON(response) {
 };
 
 
-export function commonThunk({method, path, name, body, query}, then) {
+export function commonThunk(opts, then) {
+  const {
+    path,
+    method = 'GET',
+    credentials = 'include',
+    name,
+    query,
+    body,
+  } = opts;
   const fetchId = name || path;
   const url = `${API_BASE_URL}${path}?${query ? params(query) : ""}`;
 
@@ -51,7 +59,7 @@ export function commonThunk({method, path, name, body, query}, then) {
     fetch(url, {
       headers: defaultHeaders,
       method: method.toUpperCase(),
-      credentials: 'omit',
+      credentials: credentials,
       body: JSON.stringify(body)
     })
     .then(checkStatus)

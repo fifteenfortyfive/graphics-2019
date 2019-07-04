@@ -4,11 +4,11 @@ import {connect} from 'react-redux';
 
 import * as StreamStateStore from '../../selectors/stream';
 import * as EventStore from '../../../selectors/events';
+import Section from '../section';
 import LoadingSpinner from '../../../uikit/loading-spinner';
 
 import {EVENT_ID} from '../../../constants';
 import {runTime} from '../../../util';
-import style from './socket-status.mod.css';
 
 const RawStateSection = (props) => {
   const {
@@ -19,28 +19,28 @@ const RawStateSection = (props) => {
   } = props;
 
   return (
-    <div class={classNames(style.section, className)}>
+    <Section
+        className={className}
+        title="Event Time"
+      >
       { ready
         ? <Fragment>
-            <h1 class={style.sectionTitle}>{event.name}</h1>
+            <h1>{event.name}</h1>
 
-            <div class={style.sectionContent}>
-              {runTime(tick)}
-            </div>
+            <p>{runTime(tick)}</p>
           </Fragment>
         : <LoadingSpinner color="black" />
       }
-    </div>
+    </Section>
   );
 };
 
 const mapStateToProps = (state) => {
-  const streamState = StreamStateStore.getStreamState(state);
-  const event = EventStore.getEvent(streamState, {eventId: EVENT_ID});
+  const event = EventStore.getEvent(state, {eventId: EVENT_ID});
 
   return {
     event,
-    tick: state.streamState.tick,
+    tick: state.tick,
     ready: event
   };
 };

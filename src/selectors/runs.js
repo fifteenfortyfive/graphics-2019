@@ -18,9 +18,12 @@ export const getRunProgress = createCachedSelector(
       return 100;
     } else if(started_at == null) {
       return 0;
-    } else {
+    } else if(currentTime != null) {
       const elapsed = currentTime.diff(timeFromISO(started_at)).as('seconds');
       return Math.min(0.99, elapsed / est_seconds) * 100;
+    } else {
+      // If currentTime doesn't exist, we can't state progress.
+      return 0;
     }
   }
 )(getRunId);

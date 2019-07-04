@@ -1,10 +1,20 @@
+@value brand, black, gray-700, gray-300, white from '../style/theme.css';
 @value space-2, space-3 from '../style/theme.css';
+
+.body {
+  width: 100vw;
+  height: 100vh;
+  overflow: scroll;
+  background-color: gray-700;
+  color: white;
+}
 
 .container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: space-3;
   grid-auto-flow: row dense;
+  grid-auto-rows: minmax(min-content, 120px);
   width: 1280px;
   padding: space-2;
   margin: space-3 auto;
@@ -15,7 +25,19 @@
   grid-row: span 1;
 }
 
-.rawState {
-  grid-column: span 4;
+.eventTime {
+  grid-column: 1 / span 1;
   grid-row: span 1;
+}
+
+.featuredRun {
+  grid-column: 2 / span 1;
+  grid-row: span 1;
+}
+
+.rawState {
+  grid-column: 1 / span-3;
+  grid-row: span 1;
+  background-color: gray-300;
+  color: black;
 }

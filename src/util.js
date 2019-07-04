@@ -9,11 +9,11 @@ export function timeFromISO(isoString) {
 }
 
 export function diffSeconds(end, start) {
-  return end.diff(start).as('seconds');
+  return end && start && end.diff(start).as('seconds');
 }
 
 export function runTime(seconds) {
-  return Duration.fromMillis(seconds * 1000).toFormat("hh:mm:ss");
+  return seconds && Duration.fromMillis(seconds * 1000).toFormat("hh:mm:ss");
 }
 
 export function runTimeFromStart(startString) {

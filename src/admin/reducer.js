@@ -1,9 +1,13 @@
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import _ from 'lodash';
+import Cookies from 'js-cookie';
 import {DateTime} from 'luxon';
 
-import {RunUpdateTypes} from '../constants';
+import {
+  ADMIN_SESSION_COOKIE_NAME,
+  RunUpdateTypes
+} from '../constants';
 
 const defaultState = {
   accounts: {},
@@ -15,7 +19,7 @@ const defaultState = {
   socket: {
     connected: false
   },
-  streamState: {},
+  sessionId: null,
 };
 
 const reducerActions = {
@@ -46,6 +50,25 @@ const reducerActions = {
         ...state.fetching,
         [data.fetchId]: 'failed'
       }
+    };
+  },
+
+  'RECEIVE_AUTH': (state, {data}) => {
+    const { sessionId } = data;
+    window.sessionId = sessionId;
+    Cookies.set(ADMIN_SESSION_COOKIE_NAME, sessionId);
+    return {
+      ...state,
+      sessionId
+    };
+  },
+
+  'RECEIVE_LOGOUT': (state, {data}) => {
+    window.sessionId = null;
+    Cookies.remove(ADMIN_SESSION_COOKIE_NAME);
+    return {
+      ...state,
+      sessionId: null
     };
   },
 
@@ -165,7 +188,7 @@ const reducerActions = {
     const {state: streamState} = data;
     return {
       ...state,
-      streamState,
+      ...streamState,
     };
   }
 }

@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import {connect} from 'react-redux';
 import ReactJson from 'react-json-view';
 
-import * as StreamStateStore from '../../selectors/stream';
+import Section from '../section';
 
 import style from './socket-status.mod.css';
 
@@ -14,23 +14,22 @@ const RawStateSection = (props) => {
   } = props;
 
   return (
-    <div class={classNames(style.section, className)}>
-      <h1 class={style.sectionTitle}>Raw State</h1>
-
-      <div class={style.sectionContent}>
-        <ReactJson
-          src={streamState}
-          name="streamState"
-          collapsed
-        />
-      </div>
-    </div>
+    <Section
+        className={className}
+        title="Raw State"
+      >
+      <ReactJson
+        src={streamState}
+        name={null}
+        collapsed
+      />
+    </Section>
   );
 };
 
 const mapStateToProps = (state) => {
   return {
-    streamState: StreamStateStore.getStreamState(state)
+    streamState: state
   };
 };
 

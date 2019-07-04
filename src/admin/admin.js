@@ -1,17 +1,20 @@
-import { h, render, Component } from 'preact';
+import { h, render, Component, Fragment } from 'preact';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
+import * as AuthStore from './selectors/auth';
 import * as AccountActions from '../actions/accounts';
 import * as EventActions from '../actions/events';
 import * as GameActions from '../actions/games';
 import * as RunActions from '../actions/runs';
 import * as TeamActions from '../actions/teams';
 import * as StreamSyncActions from './actions/stream-sync';
-import LoadingSpinner from '../uikit/loading-spinner';
+import LoginForm from './components/login-form';
 import SocketStatusSection from './components/sections/socket-status';
 import EventTimeSection from './components/sections/event-time';
+import FeaturedRunSection from './components/sections/featured-run';
 import RawStateSection from './components/sections/raw-state';
+import LoadingSpinner from '../uikit/loading-spinner';
 
 import { EVENT_ID } from '../constants';
 import style from './admin.mod.css';
@@ -35,7 +38,9 @@ class App extends Component {
 
   render() {
     const {
-      ready
+      isAuthenticated,
+      ready,
+      dispatch
     } = this.props;
 
     if(!ready) {
@@ -47,10 +52,18 @@ class App extends Component {
     }
 
     return (
-      <div class={style.container}>
-        <SocketStatusSection className={style.socketStatus} />
-        <EventTimeSection className={style.eventTime} />
-        <RawStateSection className={style.rawState} />
+      <div class={style.body}>
+        <div class={style.container}>
+          { isAuthenticated
+            ? <Fragment>
+                <SocketStatusSection className={style.socketStatus} />
+                <EventTimeSection className={style.eventTime} />
+                <FeaturedRunSection className={style.featuredRun} />
+                <RawStateSection className={style.rawState} />
+              </Fragment>
+            : <LoginForm dispatch={dispatch} />
+          }
+        </div>
       </div>
     );
   }
@@ -64,9 +77,12 @@ const mapStateToProps = (state) => {
       !state.fetching[`teams`] &&
       !state.fetching[`games`];
 
+  const isAuthenticated = AuthStore.isLoggedIn(state);
+
   return {
     eventId: EVENT_ID,
-    ready
+    isAuthenticated,
+    ready,
   };
 };
 
