@@ -66,7 +66,7 @@ export function commonThunk(opts, then) {
     .then(parseJSON)
     .then((response) => {
       dispatch(fetchSucceeded(fetchId));
-      then(dispatch, response);
+      then && then(dispatch, response);
     });
   };
 }

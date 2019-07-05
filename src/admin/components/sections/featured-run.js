@@ -1,15 +1,24 @@
 import {h} from 'preact';
 import {connect} from 'react-redux';
 
-import {getStreamState} from '../../selectors/stream';
 import * as FeaturedRunStore from '../../../selectors/featured-run';
+import * as RemoteControlActions from '../../actions/remote-control';
 import Section from '../section';
 import Run from '../../../components/run';
+import Button from '../button';
 
-const FeaturedRun = (props) => {
+import {CollectionTypes} from '../../../constants';
+import style from './featured-run.mod.css';
+
+function refresh(dispatch) {
+  return dispatch(RemoteControlActions.pushForceResync(CollectionTypes.ACCOUNTS));
+}
+
+const FeaturedRunSection = (props) => {
   const {
     featuredRunId,
-    className
+    className,
+    dispatch
   } = props;
 
   return (
@@ -17,8 +26,16 @@ const FeaturedRun = (props) => {
         className={className}
         title="Featured Run"
       >
+      <Run
+        className={style.run}
+        runId={featuredRunId}
+      />
       <p>Run ID: <strong>{featuredRunId}</strong></p>
-      <Run runId={featuredRunId} />
+
+      <div class={style.actions}>
+        <Button>Rotate</Button>
+        <Button onClick={() => refresh(dispatch)}>Refresh Accounts</Button>
+      </div>
     </Section>
   );
 };
@@ -32,4 +49,4 @@ const mapStateToProps = (state, props) => {
 
 export default connect(
   mapStateToProps
-)(FeaturedRun)
+)(FeaturedRunSection)

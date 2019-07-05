@@ -1,14 +1,14 @@
 import {h, Fragment} from 'preact';
 import classNames from 'classnames';
 import {connect} from 'react-redux';
-
-import * as StreamStateStore from '../../selectors/stream';
+;
 import * as EventStore from '../../../selectors/events';
 import Section from '../section';
 import LoadingSpinner from '../../../uikit/loading-spinner';
 
 import {EVENT_ID} from '../../../constants';
 import {runTime} from '../../../util';
+import style from './event-time.mod.css';
 
 const RawStateSection = (props) => {
   const {
@@ -27,7 +27,7 @@ const RawStateSection = (props) => {
         ? <Fragment>
             <h1>{event.name}</h1>
 
-            <p>{runTime(tick)}</p>
+            <p class={style.time}>{runTime(tick)}</p>
           </Fragment>
         : <LoadingSpinner color="black" />
       }

@@ -17,7 +17,11 @@ const defaultState = {
   },
   runUpdateQueue: [],
   tick: 0,
-  currentTime: DateTime.utc(),
+  currentTime: DateTime.utc().toISO(),
+  featuredRun: {
+    runId: null,
+    rotateAt: null
+  }
 };
 
 const reducerActions = {
@@ -190,11 +194,15 @@ const reducerActions = {
   },
 
   'SET_FEATURED_RUN': (state, {data}) => {
-    const {runId} = data;
+    const {runId, rotateAt} = data;
 
     return {
       ...state,
-      featuredRunId: runId
+      featuredRun: {
+        ...state.featuredRun,
+        runId,
+        rotateAt
+      }
     };
   },
 

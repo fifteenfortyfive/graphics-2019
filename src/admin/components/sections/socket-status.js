@@ -19,8 +19,8 @@ const SocketStatusSection = (props) => {
         title="Connection Status"
       >
       { isConnected
-        ? <p style={{color: 'green'}}>Connected</p>
-        : <p style={{color: 'red'}}>Not Connected</p>
+        ? <p class={style.connected}>Connected</p>
+        : <p class={style.notConnected}>Not Connected</p>
       }
     </Section>
   );

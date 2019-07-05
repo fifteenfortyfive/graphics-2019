@@ -1,6 +1,8 @@
 import {h} from 'preact';
 import {connect} from 'react-redux';
 
+import * as TimeStore from '../selectors/time';
+
 import {diffSeconds, runTime, timeFromISO} from '../util';
 
 const LiveTimer = (props) => {
@@ -14,7 +16,8 @@ const LiveTimer = (props) => {
 
 const mapStateToProps = (state, props) => {
   const {startedAt} = props;
-  const {currentTime} = state;
+
+  const currentTime = TimeStore.getCurrentTime(state);
 
   return {
     elapsedTime: runTime(diffSeconds(currentTime, timeFromISO(startedAt))),

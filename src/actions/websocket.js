@@ -3,6 +3,7 @@ import queryString from 'query-string';
 
 import * as RunActions from './runs';
 import * as RunUpdateActions from './run-updates';
+import * as ForceResyncActions from './force-resync';
 
 const SOCKET_PATH = '/api/live/stream';
 function getSocketURL() {
@@ -59,6 +60,12 @@ function handleSocketUpdate(dispatch, event) {
       dispatch(RunActions.fetchRun(data.run_id));
       dispatch(RunUpdateActions.receiveRunUpdate(data));
       return;
+    case 'REMOTE_ACTION':
+      const {action} = data;
+      dispatch(action);
+    case 'FORCE_RESYNC':
+      const {collection} = data.data;
+      ForceResyncActions.resync(dispatch, collection);
     default:
       return;
   }

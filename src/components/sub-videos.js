@@ -10,6 +10,7 @@ import Stream from './stream';
 import LoadingSpinner from '../uikit/loading-spinner';
 
 import {getActiveRunIds, getSortedTeams} from '../selectors/active-runs';
+import * as FeaturedRunStore from '../selectors/featured-run';
 
 import style from './sub-videos.mod.css';
 
@@ -104,10 +105,8 @@ class SubVideos extends Component {
 };
 
 const mapStateToProps = (state) => {
-  const featuredRunId = state.featuredRunId;
-
   return {
-    featuredRunId,
+    featuredRunId: FeaturedRunStore.getFeaturedRunId(state),
     activeRunIds: getActiveRunIds(state)
   };
 };

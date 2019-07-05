@@ -1,0 +1,6 @@
+@value gray-200, space-2, space-3, space-4, size-20 from '../../../style/theme.css';
+@value radius-1 from '../../../style/theme.css';
+
+.actions {
+  margin-top: space-4;
+}

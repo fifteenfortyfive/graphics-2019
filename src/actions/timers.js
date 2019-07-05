@@ -4,7 +4,7 @@ let intervalID = null;
 
 export function startTimers(dispatch, interval = 1000) {
   intervalID = setInterval(() => {
-    dispatch(tick(DateTime.utc()));
+    dispatch(tick(DateTime.utc().toISO()));
   }, interval);
 }
 

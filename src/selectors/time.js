@@ -8,18 +8,10 @@ const getCurrentTimeRaw = (state) => state.currentTime;
 
 export const getCurrentTime = createSelector(
   [getCurrentTimeRaw],
-  (rawTime) => {
-    if(typeof(rawTime) === "string") {
-      return DateTime.fromISO(rawTime)
-    } else {
-      return rawTime;
-    }
-  }
+  (rawTime) => DateTime.fromISO(rawTime)
 );
 
 export const getCurretTimeWithAccuracy = createCachedSelector(
   [getCurrentTime, getTimeUnit],
-  (time, unit) => {
-    return time.startOf(unit);
-  }
+  (time, unit) => time.startOf(unit)
 )(getTimeUnit);

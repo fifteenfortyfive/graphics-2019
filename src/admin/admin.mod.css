@@ -1,5 +1,5 @@
 @value brand, black, gray-700, gray-300, white from '../style/theme.css';
-@value space-2, space-3 from '../style/theme.css';
+@value space-2, space-3, space-4 from '../style/theme.css';
 
 .body {
   width: 100vw;
@@ -12,7 +12,7 @@
 .container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-gap: space-3;
+  grid-gap: space-4;
   grid-auto-flow: row dense;
   grid-auto-rows: minmax(min-content, 120px);
   width: 1280px;

@@ -2,6 +2,7 @@ import { h, render, Component } from 'preact';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 
+import * as FeaturedRunStore from '../selectors/featured-run';
 import * as AccountActions from '../actions/accounts';
 import * as EventActions from '../actions/events';
 import * as GameActions from '../actions/games';
@@ -84,7 +85,7 @@ const mapStateToProps = (state) => {
 
   return {
     eventId: EVENT_ID,
-    featuredRunId: state.featuredRunId,
+    featuredRunId: FeaturedRunStore.getFeaturedRunId(state),
     ready
   }
 };
