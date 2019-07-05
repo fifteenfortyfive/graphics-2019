@@ -1,9 +1,9 @@
 import {createSelector} from 'reselect';
 import createCachedSelector from 're-reselect';
 
-const getSocket = (state) => state.socket;
+const getAdminSocket = (state) => state.adminSocket;
 
 export const isConnected = createSelector(
-  [getSocket],
-  (socket) => socket.connected
+  [getAdminSocket],
+  (adminSocket) => adminSocket.connected
 );

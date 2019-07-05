@@ -21,6 +21,9 @@ const defaultState = {
     connected: false
   },
   sessionId: null,
+  adminSocket: {
+    connected: false
+  },
 };
 
 const reducerActions = {
@@ -83,8 +86,8 @@ const reducerActions = {
   'STREAM_SOCKET_OPENED': (state) => {
     return {
       ...state,
-      socket: {
-        ...state.socket,
+      adminSocket: {
+        ...state.adminSocket,
         connected: true
       }
     };
@@ -93,8 +96,8 @@ const reducerActions = {
   'STREAM_SOCKET_CLOSED': (state) => {
     return {
       ...state,
-      socket: {
-        ...state.socket,
+      adminSocket: {
+        ...state.adminSocket,
         connected: false
       }
     };

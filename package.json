@@ -23,10 +23,10 @@
     "react-gsap": "^1.2.0",
     "react-json-view": "^1.19.1",
     "react-redux": "^7.1.0",
-    "reconnecting-websocket": "^4.1.10",
     "redux": ">=2",
     "redux-thunk": "2.3.0",
     "reselect": "^4.0.0",
+    "sturdy-websocket": "^0.1.12",
     "yarn": "1.12.1"
   },
   "alias": {

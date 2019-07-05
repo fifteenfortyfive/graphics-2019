@@ -1,4 +1,4 @@
-import ReconnectingWebSocket from 'reconnecting-websocket';
+import SturdyWebsocket from 'sturdy-websocket';
 import queryString from 'query-string';
 
 import * as RunActions from './runs';
@@ -17,20 +17,24 @@ function getSocketURL() {
 
   return `${wsProto}://${host}${SOCKET_PATH}`;
 };
-const SOCKET = new ReconnectingWebSocket(getSocketURL());
+const SOCKET = new SturdyWebsocket(getSocketURL());
 
 
 export function bindSocketToDispatch(dispatch) {
   SOCKET.onopen = function(event) {
-    console.log("Stream Socket connected");
+    console.log("[Stream Socket] connected");
     dispatch(streamSocketOpened());
   };
-  SOCKET.onclose = function(event) {
-    console.log("Stream Socket closed. Reconnecting...");
+  SOCKET.onreopen = function(event) {
+    console.log("[Stream Socket] re-connected");
+    dispatch(streamSocketOpened());
+  };
+  SOCKET.ondown = function(event) {
+    console.log("[Stream Socket] closed. Reconnecting...");
     dispatch(streamSocketClosed());
   };
   SOCKET.onerror = function(event) {
-    console.log("Stream Socket errored. Reconnecting...");
+    console.log("[Stream Socket] errored. Reconnecting...");
     dispatch(streamSocketClosed());
   };
   SOCKET.onmessage = function(event) {
