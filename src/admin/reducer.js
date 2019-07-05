@@ -10,6 +10,7 @@ import {
 } from '../constants';
 
 const defaultState = {
+  dataIsReady: false,
   accounts: {},
   events: {},
   games: {},
@@ -50,6 +51,13 @@ const reducerActions = {
         ...state.fetching,
         [data.fetchId]: 'failed'
       }
+    };
+  },
+
+  'DATA_READY': (state, {data}) => {
+    return {
+      ...state,
+      dataIsReady: true
     };
   },
 

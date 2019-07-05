@@ -1,3 +1,6 @@
+import './style/reset.css';
+import './style/theme.css';
+
 import { h, render } from 'preact';
 import { Provider, connect } from 'react-redux';
 
@@ -8,8 +11,6 @@ import {store} from './reducer';
 import Admin from './admin/admin';
 import {adminStore} from './admin/reducer';
 
-import './style/reset.css';
-import './style/theme.css';
 
 
 if(window.location.pathname === '/admin') {

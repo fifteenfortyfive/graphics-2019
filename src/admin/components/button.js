@@ -14,7 +14,7 @@ const Button = (props) => {
   return (
     <button
         {...buttonProps}
-        className={classNames(style.button, className)}
+        className={classNames(style.button, style.fullwidth, className)}
         onClick={onClick}
       >
       {children}

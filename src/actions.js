@@ -56,18 +56,18 @@ export function commonThunk(opts, then) {
 
   return dispatch => {
     dispatch(fetchStarted(fetchId));
-    fetch(url, {
-      headers: defaultHeaders,
-      method: method.toUpperCase(),
-      credentials: credentials,
-      body: JSON.stringify(body)
-    })
-    .then(checkStatus)
-    .then(parseJSON)
-    .then((response) => {
-      dispatch(fetchSucceeded(fetchId));
-      then && then(dispatch, response);
-    });
+    return fetch(url, {
+          headers: defaultHeaders,
+          method: method.toUpperCase(),
+          credentials: credentials,
+          body: JSON.stringify(body)
+        })
+        .then(checkStatus)
+        .then(parseJSON)
+        .then((response) => {
+          dispatch(fetchSucceeded(fetchId));
+          then && then(dispatch, response);
+        });
   };
 }
 

@@ -1,19 +1,18 @@
 import { h, render, Component, Fragment } from 'preact';
 import { connect } from 'react-redux';
+import classNames from 'classnames';
 import _ from 'lodash';
 
 import * as AuthStore from './selectors/auth';
-import * as AccountActions from '../actions/accounts';
-import * as EventActions from '../actions/events';
-import * as GameActions from '../actions/games';
-import * as RunActions from '../actions/runs';
-import * as TeamActions from '../actions/teams';
+import * as InitStore from '../selectors/init';
+import * as InitActions from '../actions/init';
 import * as StreamSyncActions from './actions/stream-sync';
 import LoginForm from './components/login-form';
 import SocketStatusSection from './components/sections/socket-status';
 import EventTimeSection from './components/sections/event-time';
 import FeaturedRunSection from './components/sections/featured-run';
 import RawStateSection from './components/sections/raw-state';
+import ResyncSection from './components/sections/resync';
 import LoadingSpinner from '../uikit/loading-spinner';
 
 import { EVENT_ID } from '../constants';
@@ -25,11 +24,7 @@ class App extends Component {
     const {eventId, dispatch} = this.props;
     StreamSyncActions.bindSocketToDispatch(dispatch);
 
-    dispatch(EventActions.fetchEvent(eventId));
-    dispatch(TeamActions.fetchTeams(eventId));
-    dispatch(AccountActions.fetchAccounts());
-    dispatch(GameActions.fetchGames());
-    dispatch(RunActions.fetchRuns(EVENT_ID, {}));
+    dispatch(InitActions.fetchAll(EVENT_ID));
   }
 
   componentWillUnmount() {
@@ -52,7 +47,7 @@ class App extends Component {
     }
 
     return (
-      <div class={style.body}>
+      <div class={classNames(style.body, "admin-dashboard")}>
         <div class={style.container}>
           { isAuthenticated
             ? <Fragment>
@@ -60,6 +55,7 @@ class App extends Component {
                 <EventTimeSection className={style.eventTime} />
                 <FeaturedRunSection className={style.featuredRun} />
                 <RawStateSection className={style.rawState} />
+                <ResyncSection className={style.resync} />
               </Fragment>
             : <LoginForm dispatch={dispatch} />
           }
@@ -70,12 +66,7 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const ready =
-      !state.fetching[`events.${EVENT_ID}`] &&
-      !state.fetching[`runs`] &&
-      !state.fetching[`accounts`] &&
-      !state.fetching[`teams`] &&
-      !state.fetching[`games`];
+  const ready = InitStore.isReady(state);
 
   const isAuthenticated = AuthStore.isLoggedIn(state);
 

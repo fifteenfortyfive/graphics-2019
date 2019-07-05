@@ -2,17 +2,12 @@ import {h} from 'preact';
 import {connect} from 'react-redux';
 
 import * as FeaturedRunStore from '../../../selectors/featured-run';
-import * as RemoteControlActions from '../../actions/remote-control';
 import Section from '../section';
 import Run from '../../../components/run';
 import Button from '../button';
 
 import {CollectionTypes} from '../../../constants';
 import style from './featured-run.mod.css';
-
-function refresh(dispatch) {
-  return dispatch(RemoteControlActions.pushForceResync(CollectionTypes.ACCOUNTS));
-}
 
 const FeaturedRunSection = (props) => {
   const {
@@ -34,7 +29,6 @@ const FeaturedRunSection = (props) => {
 
       <div class={style.actions}>
         <Button>Rotate</Button>
-        <Button onClick={() => refresh(dispatch)}>Refresh Accounts</Button>
       </div>
     </Section>
   );

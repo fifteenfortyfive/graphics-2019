@@ -3,11 +3,8 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 
 import * as FeaturedRunStore from '../selectors/featured-run';
-import * as AccountActions from '../actions/accounts';
-import * as EventActions from '../actions/events';
-import * as GameActions from '../actions/games';
-import * as RunActions from '../actions/runs';
-import * as TeamActions from '../actions/teams';
+import * as InitStore from '../selectors/init';
+import * as InitActions from '../actions/init';
 import * as TimerActions from '../actions/timers';
 import * as WebSocketActions from '../actions/websocket';
 import Layout from '../components/layout';
@@ -33,11 +30,7 @@ class App extends Component {
     WebSocketActions.bindSocketToDispatch(dispatch);
     TimerActions.startTimers(dispatch, 1000);
 
-    dispatch(EventActions.fetchEvent(eventId));
-    dispatch(TeamActions.fetchTeams(eventId));
-    dispatch(AccountActions.fetchAccounts());
-    dispatch(GameActions.fetchGames());
-    dispatch(RunActions.fetchRuns(EVENT_ID, {}));
+  dispatch(InitActions.fetchAll(EVENT_ID));
   }
 
   componentWillUnmount() {
@@ -76,12 +69,9 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const ready =
-      !state.fetching[`events.${EVENT_ID}`] &&
-      !state.fetching[`runs`] &&
-      !state.fetching[`accounts`] &&
-      !state.fetching[`teams`] &&
-      !state.fetching[`games`];
+  const ready = InitStore.isReady(state);
+
+  console.log(ready);
 
   return {
     eventId: EVENT_ID,

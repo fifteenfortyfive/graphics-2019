@@ -43,9 +43,3 @@
 @value radius-2 8px;
 @value radius-3 16px;
 @value radius-4 50%;
-
-
-
-body {
-  font-family: font-text;
-}

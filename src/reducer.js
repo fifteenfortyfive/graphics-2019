@@ -6,6 +6,7 @@ import {DateTime} from 'luxon';
 import {RunUpdateTypes} from './constants';
 
 const defaultState = {
+  dataIsReady: false,
   accounts: {},
   events: {},
   games: {},
@@ -21,7 +22,7 @@ const defaultState = {
   featuredRun: {
     runId: null,
     rotateAt: null
-  }
+  },
 };
 
 const reducerActions = {
@@ -52,6 +53,13 @@ const reducerActions = {
         ...state.fetching,
         [data.fetchId]: 'failed'
       }
+    };
+  },
+
+  'DATA_READY': (state, {data}) => {
+    return {
+      ...state,
+      dataIsReady: true
     };
   },
 

@@ -22,8 +22,8 @@ export const ADMIN_SESSION_COOKIE_NAME = "1545_session_id";
 
 export const CollectionTypes = {
   ACCOUNTS: 'accounts',
-  RUNS: 'runs',
-  GAMES: 'games',
-  TEAMS: 'teams',
   EVENT: 'event',
+  GAMES: 'games',
+  RUNS: 'runs',
+  TEAMS: 'teams',
 }
