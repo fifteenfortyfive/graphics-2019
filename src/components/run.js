@@ -72,6 +72,7 @@ class Run extends Component {
       team,
       midRow = "game",
       showProgressBar = false,
+      wrapText = true,
       progress,
       ready,
       className
@@ -80,7 +81,9 @@ class Run extends Component {
     if(!ready) return null;
 
     return (
-      <div class={classNames(style.run, className)} style={{'--color': `#${team.color}`}}>
+      <div class={classNames(style.run, className, {
+        [style.noWrap]: !wrapText
+      })} style={{'--color': `#${team.color}`}}>
         { ready
           ? <Fragment>
               <div class={style.runnerAvatar}>

@@ -3,6 +3,7 @@
 @value font-mono from '../style/theme.css';
 
 .run {
+  width: 100%;
   display: flex;
   align-items: center;
   font-size: size-12;
@@ -68,4 +69,17 @@
 
 .progress {
   margin-top: space-2;
+}
+
+
+.noWrap {
+  .gameName,
+  .teamName,
+  .runnerName,
+  .detail {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 1em;
+  }
 }

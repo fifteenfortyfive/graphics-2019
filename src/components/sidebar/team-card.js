@@ -16,7 +16,6 @@ import {
   isTeamFinished
 } from '../../selectors/teams';
 import Run from '../run';
-import RunGameRow from './run-game-row';
 import LoadingSpinner from '../../uikit/loading-spinner';
 import ProgressBar from '../../uikit/progress-bar';
 
@@ -62,6 +61,7 @@ class TeamCard extends Component {
               className={style.run}
               runId={currentRun.id}
               showProgressBar={true}
+              wrapText={false}
             />
           </div>
         </div>

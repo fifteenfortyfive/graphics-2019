@@ -45,19 +45,6 @@
   }
 }
 
-.sectionHeader {
-  font-size: size-10;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  margin-bottom: space-2;
-}
-
-.gameRow {
-  margin: space-3 0;
-}
-
-
 .teamProgress {
   margin-top: space-2;
   height: 6px;
