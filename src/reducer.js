@@ -21,7 +21,14 @@ const defaultState = {
   currentTime: DateTime.utc().toISO(),
   featuredRun: {
     runId: null,
-    rotateAt: null
+    rotateAt: null,
+    // Evenly split feature time within an hour across the 7 teams
+    // This can be overwritten by the admin dashboard.
+    rotationInterval: Math.floor(60 * 60 / 7),
+    // `true` when the stream should automatically rotate to the next
+    // stream when `rotateAt` is reached. `false` if it should stay
+    // on the current run.
+    rotationEnabled: true,
   },
 };
 
@@ -210,6 +217,30 @@ const reducerActions = {
         ...state.featuredRun,
         runId,
         rotateAt
+      }
+    };
+  },
+
+  'SET_FEATURED_RUN_ROTATION_INTERVAL': (state, {data}) => {
+    const {rotationInterval} = data;
+
+    return {
+      ...state,
+      featuredRun: {
+        ...state.featuredRun,
+        rotationInterval,
+      }
+    };
+  },
+
+  'SET_FEATURED_RUN_ROTATION_ENABLED': (state, {data}) => {
+    const {rotationEnabled} = data;
+
+    return {
+      ...state,
+      featuredRun: {
+        ...state.featuredRun,
+        rotationEnabled,
       }
     };
   },

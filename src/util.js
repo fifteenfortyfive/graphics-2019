@@ -40,12 +40,23 @@ export function fullDate(date) {
 
 export function simpleDateTime(date) {
   return DateTime.fromISO(date).toLocaleString({
-    year: 'numeric',
     month: 'short',
     day: '2-digit',
     hour: '2-digit',
     minute: '2-digit',
+    second: '2-digit',
     timeZoneName: 'short'
+  });
+}
+
+
+export function simpleDateTimeUTC(date) {
+  return DateTime.fromISO(date, {zone: 'utc'}).toLocaleString({
+    month: 'short',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
   });
 }
 

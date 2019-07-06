@@ -71,8 +71,6 @@ class App extends Component {
 const mapStateToProps = (state) => {
   const ready = InitStore.isReady(state);
 
-  console.log(ready);
-
   return {
     eventId: EVENT_ID,
     featuredRunId: FeaturedRunStore.getFeaturedRunId(state),

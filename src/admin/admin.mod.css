@@ -16,7 +16,7 @@
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: space-4;
   grid-auto-flow: row dense;
-  grid-auto-rows: minmax(min-content, 80px);
+  grid-auto-rows: minmax(60px, min-content);
   width: 1280px;
   padding: space-2;
   margin: space-3 auto;
@@ -27,18 +27,28 @@
   grid-row: span 1;
 }
 
+.currentTime {
+  grid-column: 4 / span 1;
+  grid-row: span 1;
+}
+
 .eventTime {
-  grid-column: 2 / span 1;
+  grid-column: span 1;
   grid-row: span 2;
 }
 
 .featuredRun {
-  grid-column: 3 / span 1;
-  grid-row: span 2;
+  grid-column: 4 / span 1;
+  grid-row: span 3;
+}
+
+.currentRuns {
+  grid-column: span 2;
+  grid-row: span 4;
 }
 
 .rawState {
-  grid-column: span 4;
+  grid-column: span 3;
   grid-row: span 2;
   background-color: gray-300;
   color: black;

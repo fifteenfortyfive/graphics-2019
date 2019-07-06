@@ -21,7 +21,7 @@ class Run extends Component {
     switch(midRow) {
       case "team":
         return (
-          <div class={style.teamName} style={{'--color': `#${team.color}`}}>{team.name}</div>
+          <div class={style.teamName}>{team.name}</div>
         );
       case "game":
       default:
@@ -80,7 +80,7 @@ class Run extends Component {
     if(!ready) return null;
 
     return (
-      <div class={classNames(style.run, className)}>
+      <div class={classNames(style.run, className)} style={{'--color': `#${team.color}`}}>
         { ready
           ? <Fragment>
               <div class={style.runnerAvatar}>

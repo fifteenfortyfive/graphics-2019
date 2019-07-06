@@ -67,6 +67,7 @@ function handleSocketUpdate(dispatch, event) {
     case 'REMOTE_ACTION':
       const {action} = data;
       dispatch(action);
+      return;
     case 'FORCE_RESYNC':
       const {collection} = data.data;
       ForceResyncActions.resync(dispatch, collection);

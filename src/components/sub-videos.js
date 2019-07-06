@@ -1,71 +1,50 @@
 import {h, Component} from 'preact';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
-import Timeline from 'gsap/TimelineMax';
 import _ from 'lodash';
 
-import * as FeaturedStreamActions from '../actions/featured-runs';
+import * as TeamsStore from '../selectors/teams';
+import * as FeaturedRunActions from '../actions/featured-runs';
+import * as FeaturedRunStore from '../selectors/featured-run';
+import * as ActiveRunsStore from '../selectors/active-runs';
 import RunnerStream from './runner-stream';
 import Stream from './stream';
 import LoadingSpinner from '../uikit/loading-spinner';
 
-import {getActiveRunIds, getSortedTeams} from '../selectors/active-runs';
-import * as FeaturedRunStore from '../selectors/featured-run';
-
 import style from './sub-videos.mod.css';
-
-// Evenly split feature time across the 7 teams.
-// Could be dynamic but meh.
-const ROTATION_TIME = Math.floor(10 * 1000);
 
 class SubVideos extends Component {
   constructor(props) {
     super(props);
 
-    this.rotationIntervalID = null;
-
     this.rotateFeatured = this._rotateFeatured.bind(this);
-
-    this.state = {
-      featuredIndex: 0,
-      featuredId: null
-    };
   }
 
   componentDidMount() {
-    const {activeRunIds, dispatch} = this.props;
-    const {featuredIndex} = this.state;
-
-    dispatch(FeaturedStreamActions.setFeaturedRun(activeRunIds[featuredIndex]));
-
-    this.rotationIntervalID = setInterval(() => this.rotateFeatured(), ROTATION_TIME);
+    this.rotateFeatured();
   }
 
-  componentWillUnmount() {
-    clearInterval(this.rotationIntervalID);
-    this.rotationIntervalID = null;
-  }
+  componentDidUpdate(prevProps) {
+    const {
+      shouldRotate
+    } = this.props;
 
-  componentDidUpdate(prevProps, prevState) {
-    const {featuredIndex, activeRunIds} = this.props;
-    const prevFeatured = prevProps.activeRunIds[prevProps.featuredIndex];
-    const currFeatured = activeRunIds[featuredIndex];
-
-    if(featuredIndex != prevProps.featuredIndex || prevFeatured != currFeatured) {
-      dispatch(FeaturedStreamActions.setFeaturedRun(currFeatured));
+    if(shouldRotate) {
+      this.rotateFeatured();
     }
   }
 
   _rotateFeatured() {
-    const {activeRunIds, dispatch} = this.props;
-    const newFeaturedIndex = (this.state.featuredIndex + 1) % activeRunIds.length;
-    const newFeaturedRunId = activeRunIds[newFeaturedIndex];
+    const {
+      nextFeaturedRunId,
+      nextRotatesAt,
+      dispatch
+    } = this.props;
 
-    this.setState({
-      featuredIndex: newFeaturedIndex
-    });
-
-    dispatch(FeaturedStreamActions.setFeaturedRun(newFeaturedRunId));
+    dispatch(FeaturedRunActions.setFeaturedRun(
+      nextFeaturedRunId,
+      nextRotatesAt
+    ));
   }
 
   renderElement(runId) {
@@ -85,7 +64,6 @@ class SubVideos extends Component {
   render() {
     const {
       activeRunIds,
-      featuredRunId,
       className
     } = this.props;
 
@@ -107,7 +85,12 @@ class SubVideos extends Component {
 const mapStateToProps = (state) => {
   return {
     featuredRunId: FeaturedRunStore.getFeaturedRunId(state),
-    activeRunIds: getActiveRunIds(state)
+    rotationEnabled: FeaturedRunStore.getRotationEnabled(state),
+    nextRotatesAt: FeaturedRunStore.getNextRotatesAt(state),
+    nextFeaturedRunId: FeaturedRunStore.getNextFeaturedRunId(state),
+    shouldRotate: FeaturedRunStore.shouldRotate(state),
+    activeRunIds: ActiveRunsStore.getActiveRunIds(state),
+    sortedTeams: TeamsStore.getSortedTeams(state),
   };
 };
 

@@ -18,9 +18,12 @@ const mapStateToProps = (state, props) => {
   const {startedAt} = props;
 
   const currentTime = TimeStore.getCurrentTime(state);
+  const elapsedTimeSeconds = diffSeconds(currentTime, timeFromISO(startedAt));
+  const elapsedTime = runTime(elapsedTimeSeconds || 0);
+
 
   return {
-    elapsedTime: runTime(diffSeconds(currentTime, timeFromISO(startedAt))),
+    elapsedTime,
   };
 };
 

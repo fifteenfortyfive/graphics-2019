@@ -27,5 +27,5 @@ const SocketStatusSection = (props) => {
 };
 
 export default connect((state) => ({
-  isConnected: SocketStatusStore.isConnected(state)
+  isConnected: SocketStatusStore.isConnected(state),
 }))(SocketStatusSection);

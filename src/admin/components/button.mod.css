@@ -28,6 +28,10 @@
     --color: white;
   }
 
+  &:focus {
+    outline: 2px solid brand;
+  }
+
 
   &[disabled] {
     opacity: 0.6;

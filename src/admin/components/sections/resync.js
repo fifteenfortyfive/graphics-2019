@@ -19,7 +19,7 @@ class ResyncSection extends Component {
           className={className}
           title="Force Data Resync"
         >
-        <p>Use these buttons to force the layout to reload all of that kind of data without having to refresh the whole page.</p>
+        <p style={{marginBottom: 24}}>Use these buttons to force the layout to reload all of that kind of data without having to refresh the whole page.</p>
 
         <Button
             onClick={() => dispatch(RemoteControlActions.forceResyncAccounts())}

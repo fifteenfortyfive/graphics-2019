@@ -8,11 +8,13 @@ import * as InitStore from '../selectors/init';
 import * as InitActions from '../actions/init';
 import * as StreamSyncActions from './actions/stream-sync';
 import LoginForm from './components/login-form';
-import SocketStatusSection from './components/sections/socket-status';
+import CurrentRunsSection from './components/sections/current-runs';
+import CurrentTimeSection from './components/sections/current-time';
 import EventTimeSection from './components/sections/event-time';
 import FeaturedRunSection from './components/sections/featured-run';
 import RawStateSection from './components/sections/raw-state';
 import ResyncSection from './components/sections/resync';
+import SocketStatusSection from './components/sections/socket-status';
 import LoadingSpinner from '../uikit/loading-spinner';
 
 import { EVENT_ID } from '../constants';
@@ -52,10 +54,12 @@ class App extends Component {
           { isAuthenticated
             ? <Fragment>
                 <SocketStatusSection className={style.socketStatus} />
-                <EventTimeSection className={style.eventTime} />
+                <CurrentTimeSection className={style.currentTime} />
                 <FeaturedRunSection className={style.featuredRun} />
-                <RawStateSection className={style.rawState} />
+                <CurrentRunsSection className={style.currentRuns} />
+                <EventTimeSection className={style.eventTime} />
                 <ResyncSection className={style.resync} />
+                <RawStateSection className={style.rawState} />
               </Fragment>
             : <LoginForm dispatch={dispatch} />
           }
