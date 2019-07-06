@@ -27,6 +27,13 @@
     --background: gray-800;
     --color: white;
   }
+
+
+  &[disabled] {
+    opacity: 0.6;
+    cursor: normal;
+    pointer-events: none;
+  }
 }
 
 .inverted {

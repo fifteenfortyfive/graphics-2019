@@ -4,21 +4,21 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import {DateTime} from 'luxon';
 
+import * as EventStore from '../selectors/events';
 import * as RunUpdateActions from '../actions/run-updates';
 import GamesList from './omni/games-list';
 import TeamsList from './omni/teams-list';
 import RunUpdate from './omni/run-update';
+import EventTimer from './event-timer';
 import LiveTimer from './live-timer';
 import Sequenced from '../uikit/anim/sequenced';
 
-import {RunUpdateTypes} from '../constants';
+import {RunUpdateTypes, EVENT_ID} from '../constants';
 import style from './omnibar.mod.css';
 
 class Omnibar extends Component {
   constructor(props) {
     super(props);
-
-    this.startedAt = DateTime.utc().toISO();
   }
 
   handleRunUpdateDisplayed(updateId) {
@@ -30,6 +30,7 @@ class Omnibar extends Component {
   render() {
     const {
       runUpdate,
+      eventStartTime,
       className,
       dispatch
     } = this.props;
@@ -58,18 +59,14 @@ class Omnibar extends Component {
         </div>
 
         <div class={style.timerBox}>
-          {/*<div class={style.timerDescription}>Event Time</div>*/}
-          <LiveTimer
-            className={style.timer}
-            startedAt={this.startedAt}
-          />
+          <EventTimer className={style.timer} eventId={EVENT_ID} />
         </div>
       </div>
     );
   }
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, props) => ({
   runUpdate: state.runUpdateQueue[0],
 });
 

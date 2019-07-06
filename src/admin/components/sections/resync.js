@@ -8,11 +8,6 @@ import Button from '../button';
 import {CollectionTypes} from '../../../constants';
 
 class ResyncSection extends Component {
-  refresh(collection) {
-    const {dispatch} = this.props;
-    dispatch(RemoteControlActions.pushForceResync(collection));
-  }
-
   render() {
     const {
       className,
@@ -27,27 +22,27 @@ class ResyncSection extends Component {
         <p>Use these buttons to force the layout to reload all of that kind of data without having to refresh the whole page.</p>
 
         <Button
-            onClick={() => this.refresh(CollectionTypes.ACCOUNTS)}
+            onClick={() => dispatch(RemoteControlActions.forceResyncAccounts())}
           >
           Refresh Accounts
         </Button>
         <Button
-            onClick={() => this.refresh(CollectionTypes.EVENT)}
+            onClick={() => dispatch(RemoteControlActions.forceResyncEvent())}
           >
           Refresh Event
         </Button>
         <Button
-            onClick={() => this.refresh(CollectionTypes.GAMES)}
+            onClick={() => dispatch(RemoteControlActions.forceResyncGames())}
           >
           Refresh Games
         </Button>
         <Button
-            onClick={() => this.refresh(CollectionTypes.RUNS)}
+            onClick={() => dispatch(RemoteControlActions.forceResyncRuns())}
           >
           Refresh Runs
         </Button>
         <Button
-            onClick={() => this.refresh(CollectionTypes.TEAMS)}
+            onClick={() => dispatch(RemoteControlActions.forceResyncTeams())}
           >
           Refresh Teams
         </Button>

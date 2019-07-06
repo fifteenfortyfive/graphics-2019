@@ -13,7 +13,8 @@ export function diffSeconds(end, start) {
 }
 
 export function runTime(seconds) {
-  return seconds && Duration.fromMillis(seconds * 1000).toFormat("hh:mm:ss");
+  if(seconds == null) return null;
+  return Duration.fromMillis(seconds * 1000).toFormat("hh:mm:ss");
 }
 
 export function runTimeFromStart(startString) {

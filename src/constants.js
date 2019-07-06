@@ -27,3 +27,10 @@ export const CollectionTypes = {
   RUNS: 'runs',
   TEAMS: 'teams',
 }
+
+export const EventStates = {
+  READY: 'ready',
+  STARTED: 'started',
+  PAUSED: 'paused',
+  FINISHED: 'finished'
+};

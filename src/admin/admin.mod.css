@@ -23,27 +23,27 @@
 }
 
 .socketStatus {
-  grid-column: span 1;
-  grid-row: span 1;
-}
-
-.eventTime {
   grid-column: 1 / span 1;
   grid-row: span 1;
 }
 
-.featuredRun {
+.eventTime {
   grid-column: 2 / span 1;
   grid-row: span 2;
 }
 
+.featuredRun {
+  grid-column: 3 / span 1;
+  grid-row: span 2;
+}
+
 .rawState {
-  grid-column: span 3;
+  grid-column: span 4;
   grid-row: span 2;
   background-color: gray-300;
   color: black;
 }
 
 .resync {
-  grid-row: span 3;
+  grid-row: span 2;
 }

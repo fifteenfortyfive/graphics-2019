@@ -60,7 +60,7 @@ class App extends Component {
 
               <Sidebar className={style.sidebar} />
               <SubVideos class={style.subVideos} />
-              <Omnibar className={style.omnibar} />
+              <Omnibar className={style.omnibar} eventId={EVENT_ID} />
             </div>
         }
       </Layout>
