@@ -10,6 +10,23 @@ const getRuns = (state) => Object.values(state.runs);
 const getRunId = (_, props) => props.runId;
 export const getRun = (state, props) => state.runs[props.runId];
 
+export const getCurrentRunSeconds = createCachedSelector(
+  [getRun, getCurrentTime],
+  (run, currentTime) => {
+    const {started_at, est_seconds, actual_seconds} = run;
+    if(actual_seconds) {
+      return actual_seconds;
+    } else if(started_at == null) {
+      return 0;
+    } else if(currentTime != null) {
+      return currentTime.diff(timeFromISO(started_at)).as('seconds');
+    } else {
+      // If currentTime doesn't exist, we can't state progress.
+      return 0;
+    }
+  }
+)(getRunId);
+
 export const getRunProgress = createCachedSelector(
   [getRun, getCurrentTime],
   (run, currentTime) => {

@@ -30,8 +30,21 @@ const getTeamOriginalEstimate = createCachedSelector(
 )(getTeamId);
 
 const getTeamLiveEstimate = createCachedSelector(
-  [getTeamRuns],
-  (runs) => _.sumBy(runs, (run) => run.actual_seconds || run.est_seconds || 0)
+  [getTeamRuns, getCurrentTime],
+  (runs, currentTime) => {
+    return _.sumBy(runs, (run) => {
+      if(run.finished) {
+        return run.actual_seconds;
+      } else if(run.started_at) {
+        return Math.max(
+          currentTime.diff(timeFromISO(run.started_at)).as('seconds'),
+          run.est_seconds
+        );
+      } else {
+        return run.est_seconds || 0;
+      }
+    });
+  }
 )(getTeamId);
 
 const getTeamCurrentRunTime = createCachedSelector(
@@ -63,17 +76,18 @@ export const isTeamFinished = createCachedSelector(
 // progression through the team's runs.
 export const getTeamProgress = createCachedSelector(
   [
+    getTeamRuns,
     getTeamCurrentRunTime,
     getTeamLiveEstimate,
     isTeamFinished
   ],
-  (currentRunTime, liveEstimate, isFinished) => {
-    // If not all the runs are finished, even if the team goes over estimate,
-    // they cannot be 100% complete.
-    const percent = isFinished
-        ? 1.00
-        : Math.min(0.99, currentRunTime / liveEstimate);
+  (runs, currentRunTime, liveEstimate, isFinished) => {
+    // If the team is finished, just say 100%.
+    if(isFinished) return 1.00;
 
+    const progress = currentRunTime / liveEstimate;
+
+    const percent = Math.min(0.99, progress);
     return percent * 100;
   }
 )(getTeamId);
