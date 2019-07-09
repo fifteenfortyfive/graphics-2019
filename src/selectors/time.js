@@ -15,3 +15,9 @@ export const getCurretTimeWithAccuracy = createCachedSelector(
   [getCurrentTime, getTimeUnit],
   (time, unit) => time.startOf(unit)
 )(getTimeUnit);
+
+
+export const getCurrentTimeToMinute = createSelector(
+  [getCurrentTime],
+  (time) => time.startOf('minute')
+);

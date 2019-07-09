@@ -8,6 +8,7 @@ import * as EventStore from '../selectors/events';
 import * as RunUpdateActions from '../actions/run-updates';
 import GamesList from './omni/games-list';
 import TeamsList from './omni/teams-list';
+import UpcomingRuns from './omni/upcoming-runs';
 import RunUpdate from './omni/run-update';
 import EventTimer from './event-timer';
 import LiveTimer from './live-timer';
@@ -53,8 +54,9 @@ class Omnibar extends Component {
             }
           </div>
           <Sequenced>
-            <GamesList />
+            <UpcomingRuns />
             <TeamsList />
+            <GamesList />
           </Sequenced>
         </div>
 

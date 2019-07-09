@@ -2,11 +2,14 @@ import {h, Component, createRef} from 'preact';
 import {connect} from 'react-redux';
 import {TimelineMax} from 'gsap/TimelineMax';
 import _ from 'lodash';
-import style from './team-runs.mod.css';
+import humanizeDuration from "humanize-duration";
 
-import * as TeamStore from '../../selectors/teams';
+import * as TimeStore from '../../selectors/time';
+import * as UpcomingRunsStore from '../../selectors/upcoming-runs';
 import Run from '../run';
 import SlideCycle from '../../uikit/anim/slide-cycle';
+
+import style from './team-runs.mod.css';
 
 
 class TeamRuns extends Component {
@@ -36,27 +39,40 @@ class TeamRuns extends Component {
         .play(play);
   }
 
+  renderRunStartTime(startTime) {
+    const {currentTime} = this.props;
+    const diffMinutes = startTime.diff(currentTime).as('minutes');
+    const roundedTimeUntil = Math.round(diffMinutes) * 60 * 1000;
+    const timeString = humanizeDuration(roundedTimeUntil, { largest: 2, units: ['h', 'm'] });
+    return (
+      <p>
+        <span style={{opacity: 0.6}}>Starts in </span>
+        {timeString}
+      </p>
+    );
+  }
+
   render() {
     const {
-      runIds,
-      team,
+      upcomingRuns,
     } = this.props;
 
     return (
-      <div class={style.content} ref={this.container} style={{'--color': `#${team.color}`}}>
+      <div class={style.content} ref={this.container}>
         <div ref={this.header} class={style.teamHeader}>
-          <p>{team.name}</p>
+          <p>Upcoming Runs</p>
         </div>
         <SlideCycle
             class={style.content}
             timeline={this.childTimeline}
           >
-          { _.map(runIds, (runId) => (
+          { _.map(upcomingRuns, ({runId, estimatedStartTime}) => (
               <Run
                 className={style.run}
                 key={runId}
                 runId={runId}
                 midRow="game"
+                timeRow={this.renderRunStartTime(estimatedStartTime)}
               />
             ))
           }
@@ -67,14 +83,11 @@ class TeamRuns extends Component {
 };
 
 const mapStateToProps = (state, props) => {
-  const {teamId} = props;
-
-  const team = TeamStore.getTeam(state, props);
-  const runIds = TeamStore.getTeamRunIds(state, props);
+  const currentTime = TimeStore.getCurrentTime(state, props);
 
   return {
-    runIds,
-    team,
+    currentTime,
+    upcomingRuns: UpcomingRunsStore.getUpcomingRuns(state, {count: 10}),
   };
 }
 

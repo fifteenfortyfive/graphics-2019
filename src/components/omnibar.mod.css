@@ -51,18 +51,3 @@
   border-left: 1px solid brand;
   color: white;
 }
-
-.timerDescription {
-  font-size: size-10;
-  text-transform: uppercase;
-  font-weight: 700;
-  letter-spacing: 0.75px;
-}
-
-.timer {
-  padding: space-2 space-4 space-1 space-4;
-  font-family: font-mono;
-  font-size: size-42;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-}

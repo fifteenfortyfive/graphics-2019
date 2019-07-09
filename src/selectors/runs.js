@@ -10,6 +10,16 @@ const getRuns = (state) => Object.values(state.runs);
 const getRunId = (_, props) => props.runId;
 export const getRun = (state, props) => state.runs[props.runId];
 
+
+export const getRunsByTeam = createSelector(
+  [getRuns],
+  (runs) => _.chain(runs)
+    .sortBy('index')
+    .groupBy('team_id')
+    .value()
+);
+
+
 export const getCurrentRunSeconds = createCachedSelector(
   [getRun, getCurrentTime],
   (run, currentTime) => {

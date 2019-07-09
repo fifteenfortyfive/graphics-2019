@@ -34,7 +34,10 @@ class Run extends Component {
   renderTimeRow() {
     const {
       run,
+      timeRow
     } = this.props;
+
+    if(timeRow) return timeRow;
 
     if(run.actual_seconds) {
       return (

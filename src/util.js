@@ -1,7 +1,6 @@
 import {DateTime} from 'luxon';
 import Duration from 'luxon/src/duration';
-import { createSelectorCreator } from 'reselect'
-import _ from 'lodash'
+import _ from 'lodash';
 
 
 export function timeFromISO(isoString) {

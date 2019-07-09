@@ -23,6 +23,11 @@ export const getTeamRuns = createCachedSelector(
   }
 )(getTeamId);
 
+export const getTeamRunIds = createCachedSelector(
+  [getTeamRuns],
+  (runs) => _.map(runs, 'id')
+)(getTeamId);
+
 
 const getTeamOriginalEstimate = createCachedSelector(
   [getTeamRuns],
