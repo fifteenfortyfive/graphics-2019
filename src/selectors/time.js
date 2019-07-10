@@ -11,7 +11,7 @@ export const getCurrentTime = createSelector(
   (rawTime) => DateTime.fromISO(rawTime)
 );
 
-export const getCurretTimeWithAccuracy = createCachedSelector(
+export const getCurrentTimeWithAccuracy = createCachedSelector(
   [getCurrentTime, getTimeUnit],
   (time, unit) => time.startOf(unit)
 )(getTimeUnit);
@@ -20,4 +20,9 @@ export const getCurretTimeWithAccuracy = createCachedSelector(
 export const getCurrentTimeToMinute = createSelector(
   [getCurrentTime],
   (time) => time.startOf('minute')
+);
+
+export const getCurrentTimeISOToMinute = createSelector(
+  [getCurrentTime],
+  (time) => time.startOf('minute').toISO()
 );

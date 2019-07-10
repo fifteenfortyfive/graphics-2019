@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 import {timeFromISO} from '../util'
 
-import {getCurrentTimeToMinute} from './time';
+import {getCurrentTimeISOToMinute} from './time';
 import {getRunsByTeam} from './runs';
 
 // This is only updated once a minute because it's fairly expensive. The next
@@ -12,27 +12,29 @@ import {getRunsByTeam} from './runs';
 //
 // Returns a map of teamId => [{runId, estimatedStartTime, isStarted}]
 export const getEstimatedRunSchedulesByTeam = createSelector(
-  [getCurrentTimeToMinute, getRunsByTeam],
-  (currentTime, runsByTeam) => {
-    return _.mapValues(runsByTeam, (runs, teamId) => {
-      let lastEndedAt = currentTime;
+  [getCurrentTimeISOToMinute, getRunsByTeam],
+  (currentTimeISO, runsByTeam) => {
+    return _.mapValues(runsByTeam, (runs) => {
+      let lastEndedAt = timeFromISO(currentTimeISO);
       const mapped = _.map(runs, (run, index) => {
-        if(run.started_at != null) {
-          lastEndedAt = lastEndedAt.plus({seconds: run.actual_seconds});
+        const runDuration = run.actual_seconds || run.est_seconds;
+        if(run.started_at) {
+          const startedAt = timeFromISO(run.started_at);
+          lastEndedAt = startedAt.plus({seconds: runDuration});
           return {
             runId: run.id,
-            estimatedStartTime: timeFromISO(run.started_at),
+            estimatedStartTime: startedAt,
             isStarted: true,
           };
         } else {
-          if(index == 0) lastEndedAt = currentTime;
+          if(index === 0) lastEndedAt = currentTime;
           const result = {
             runId: run.id,
-            estimatedStartTime: lastEndedAt,
+            estimatedStartTime: lastEndedAt.plus(0),
             isStarted: false
           };
 
-          lastEndedAt = lastEndedAt.plus({seconds: run.est_seconds});
+          lastEndedAt = lastEndedAt.plus({seconds: runDuration});
           return result;
         }
       });

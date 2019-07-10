@@ -41,7 +41,7 @@ class TeamRuns extends Component {
 
   renderRunStartTime(startTime) {
     const {currentTime} = this.props;
-    const diffMinutes = currentTime.diff(startTime).as('minutes');
+    const diffMinutes = startTime.diff(currentTime).as('minutes');
     const roundedTimeUntil = Math.round(diffMinutes) * 60 * 1000;
     const timeString = humanizeDuration(roundedTimeUntil, { largest: 2, units: ['h', 'm'] });
     return (
@@ -84,6 +84,7 @@ class TeamRuns extends Component {
 
 const mapStateToProps = (state, props) => {
   const currentTime = TimeStore.getCurrentTime(state, props);
+  const upcoming = UpcomingRunsStore.getUpcomingRuns(state, {count: 10});
 
   return {
     currentTime,
