@@ -27,7 +27,6 @@ const EventTimer = (props) => {
   return (
     <div class={classNames(className)}>
       <p class={style.eventTimer}>{runTime(eventTimeSeconds)}</p>
-      <p class={style.currentTime}>{currentTimeString}</p>
     </div>
   );
 }
