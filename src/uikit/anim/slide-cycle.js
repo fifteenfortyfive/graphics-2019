@@ -25,7 +25,7 @@ class SlideCycle extends Component {
 
     timeline
         .staggerFromTo(this.refs, 0.4, {y: 80}, {y: 0, ease: "Power4.easeOut"}, 0.08)
-        .add(fadeTLs, "+=3", "normal", 6);
+        .add(fadeTLs, "+=3", "normal", 5);
   }
 
   render() {

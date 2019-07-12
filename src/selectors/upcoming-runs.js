@@ -16,7 +16,7 @@ export const getEstimatedRunSchedulesByTeam = createSelector(
   (currentTimeISO, runsByTeam) => {
     return _.mapValues(runsByTeam, (runs) => {
       let lastEndedAt = timeFromISO(currentTimeISO);
-      const mapped = _.map(runs, (run, index) => {
+      return _.map(runs, (run, index) => {
         const runDuration = run.actual_seconds || run.est_seconds;
         if(run.started_at) {
           const startedAt = timeFromISO(run.started_at);
@@ -27,7 +27,7 @@ export const getEstimatedRunSchedulesByTeam = createSelector(
             isStarted: true,
           };
         } else {
-          if(index === 0) lastEndedAt = currentTime;
+          if(index === 0) lastEndedAt = timeFromISO(currentTimeISO);
           const result = {
             runId: run.id,
             estimatedStartTime: lastEndedAt.plus(0),
@@ -38,8 +38,6 @@ export const getEstimatedRunSchedulesByTeam = createSelector(
           return result;
         }
       });
-
-      return mapped;
     });
   }
 );

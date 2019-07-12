@@ -19,7 +19,10 @@ export const getSortedTeams = createSelector(
 export const getTeamRuns = createCachedSelector(
   [getRuns, getTeamId],
   (runs, teamId) => {
-    return _.filter(runs, (run) => run.team_id == teamId);
+    return _.chain(runs)
+        .filter((run) => run.team_id == teamId)
+        .sortBy('index')
+        .value();
   }
 )(getTeamId);
 
@@ -71,9 +74,7 @@ const getTeamCurrentRunTime = createCachedSelector(
 // Returns true if all of the team's runs have been marked as finished.
 export const isTeamFinished = createCachedSelector(
   [getTeamRuns],
-  (runs) => {
-    return _.every(runs, 'finished');
-  }
+  (runs) => _.every(runs, 'finished')
 )(getTeamId);
 
 
