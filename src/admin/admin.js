@@ -12,6 +12,7 @@ import CurrentRunsSection from './components/sections/current-runs';
 import CurrentTimeSection from './components/sections/current-time';
 import EventTimeSection from './components/sections/event-time';
 import FeaturedRunSection from './components/sections/featured-run';
+import PreshowSection from './components/sections/preshow';
 import RawStateSection from './components/sections/raw-state';
 import ResyncSection from './components/sections/resync';
 import SocketStatusSection from './components/sections/socket-status';
@@ -59,6 +60,7 @@ class App extends Component {
                 <CurrentRunsSection className={style.currentRuns} />
                 <EventTimeSection className={style.eventTime} />
                 <ResyncSection className={style.resync} />
+                <PreshowSection className={style.preshow} />
                 <RawStateSection className={style.rawState} />
               </Fragment>
             : <LoginForm dispatch={dispatch} />

@@ -30,6 +30,9 @@ const defaultState = {
     // on the current run.
     rotationEnabled: true,
   },
+  preshow: {
+    activeOverlay: {}
+  },
 };
 
 const reducerActions = {
@@ -251,6 +254,18 @@ const reducerActions = {
       ...state,
       tick: state.tick + 1,
       currentTime
+    };
+  },
+
+  'PRESHOW_SET_OVERLAY': (state, {data}) => {
+    return {
+      ...state,
+      preshow: {
+        ...state.preshow,
+        activeOverlay: {
+          ...data
+        }
+      }
     };
   }
 }

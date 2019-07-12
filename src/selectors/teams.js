@@ -32,6 +32,15 @@ export const getTeamRunIds = createCachedSelector(
 )(getTeamId);
 
 
+export const getTeamRunIdsGameOrdered = createCachedSelector(
+  [getTeamRuns],
+  (runs) => _.chain(runs)
+      .sortBy('game_id')
+      .map('id')
+      .value()
+)(getTeamId);
+
+
 const getTeamOriginalEstimate = createCachedSelector(
   [getTeamRuns],
   (runs) => _.sumBy(runs, 'est_seconds')

@@ -47,9 +47,13 @@
   grid-row: span 4;
 }
 
+.preshow {
+  grid-column: 1 / span 1;
+}
+
 .rawState {
   grid-column: span 3;
-  grid-row: span 2;
+  grid-row: span 3;
   background-color: gray-300;
   color: black;
 }
