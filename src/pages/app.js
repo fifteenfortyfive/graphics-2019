@@ -51,6 +51,7 @@ class App extends Component {
                   isFeatured={false}
                   includeFeaturedIndicator={false}
                   quality={Stream.Qualities.SOURCE}
+                  volume={0.9}
                 />
               </div>
 

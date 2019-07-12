@@ -36,6 +36,5 @@ if(window.location.pathname === '/admin') {
       <StateSync />
     </Provider>
   , document.querySelector('#app-container'));
-  // import 'preact/debug';
 }
 
