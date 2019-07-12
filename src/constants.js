@@ -1,5 +1,8 @@
-export const API_BASE_URL = "http://localhost:3000";
-// export const API_BASE_URL = "https://fifteenfortyfive.org/";
+import queryString from 'query-string';
+
+const {api_base: queryAPIBase} = queryString.parse(window.location.search);
+
+export const API_BASE_URL = queryAPIBase || "http://localhost:3000";
 export const ASSETS_URL = "https://fifteenfortyfive-assets.nyc3.cdn.digitaloceanspaces.com";
 
 
