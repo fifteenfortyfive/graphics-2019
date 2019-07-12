@@ -26,7 +26,6 @@ if(window.location.pathname === '/admin') {
   render(
     <Provider store={store}>
       <PreShow />
-      <StateSync />
     </Provider>
   , document.querySelector('#app-container'));
   // import 'preact/debug';
