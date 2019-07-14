@@ -16,6 +16,7 @@ import PreshowSection from './components/sections/preshow';
 import RawStateSection from './components/sections/raw-state';
 import ResyncSection from './components/sections/resync';
 import SocketStatusSection from './components/sections/socket-status';
+import TeamSection from './components/sections/teams';
 import LoadingSpinner from '../uikit/loading-spinner';
 
 import { EVENT_ID } from '../constants';
@@ -62,6 +63,7 @@ class App extends Component {
                 <ResyncSection className={style.resync} />
                 <PreshowSection className={style.preshow} />
                 <RawStateSection className={style.rawState} />
+                <TeamSection className={style.teams} />
               </Fragment>
             : <LoginForm dispatch={dispatch} />
           }

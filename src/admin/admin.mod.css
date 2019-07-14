@@ -59,5 +59,11 @@
 }
 
 .resync {
+  grid-column: 1 / span 1;
   grid-row: span 2;
+}
+
+.teams {
+  grid-column: 2 / span 3;
+  grid-row: 5 / span 2;
 }

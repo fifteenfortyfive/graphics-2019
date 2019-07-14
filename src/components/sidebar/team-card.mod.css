@@ -1,5 +1,5 @@
-@value white, gray-100, gray-700, gray-760, black from '../../style/theme.css';
-@value size-10, size-12, size-14, space-2, space-3, space-4 from '../../style/theme.css';
+@value white, gray-100, gray-400, gray-700, gray-760, black from '../../style/theme.css';
+@value size-10, size-12, size-14, size-32, space-2, space-3, space-4 from '../../style/theme.css';
 @value font-mono, radius-1 from '../../style/theme.css';
 
 .teamCard {
@@ -48,4 +48,15 @@
 .teamProgress {
   margin-top: space-2;
   height: 6px;
+}
+
+
+.finalRealTime {
+  font-size: size-32;
+  padding: space-3;
+}
+
+
+.muted {
+  color: gray-400;
 }

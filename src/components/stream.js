@@ -11,7 +11,7 @@ import style from './stream.mod.css';
 
 // Set this to use thumbnails instead of interactive twitch players.
 // Reduces load times and helps React Dev Tools not break.
-const USE_STREAM_PLACEHOLDERS = false;
+const USE_STREAM_PLACEHOLDERS = true;
 
 const GLOBAL_PLAYER_OPTIONS = {
   width: "100%",

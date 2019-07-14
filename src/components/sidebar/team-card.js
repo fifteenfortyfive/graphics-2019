@@ -13,13 +13,15 @@ import {
 import {
   getTeam,
   getTeamProgress,
-  isTeamFinished
+  isTeamFinished,
+  getTeamLiveEstimate,
 } from '../../selectors/teams';
 import Run from '../run';
 import LoadingSpinner from '../../uikit/loading-spinner';
 import ProgressBar from '../../uikit/progress-bar';
 
 import { EVENT_ID } from '../../constants';
+import { runTime } from '../../util';
 import style from './team-card.mod.css';
 
 
@@ -36,6 +38,8 @@ class TeamCard extends Component {
       currentRun,
       sortedRuns,
       progress,
+      isFinished,
+      finalGameTime,
       className
     } = this.props;
 
@@ -56,14 +60,22 @@ class TeamCard extends Component {
           </p>
         </div>
         <div class={style.details}>
-          <div class={style.section}>
-            <Run
-              className={style.run}
-              runId={currentRun.id}
-              showProgressBar={true}
-              wrapText={false}
-            />
-          </div>
+          { isFinished
+            ? <div class={style.section}>
+                <h2 class={style.finalRealTime}>
+                  <span class={style.muted}>Finished: </span>
+                  {runTime(team.actual_time_seconds)}
+                </h2>
+              </div>
+            : <div class={style.section}>
+                <Run
+                  className={style.run}
+                  runId={currentRun.id}
+                  showProgressBar={true}
+                  wrapText={false}
+                />
+              </div>
+          }
         </div>
         <ProgressBar
           className={style.teamProgress}
@@ -79,14 +91,14 @@ const mapStateToProps = (state, props) => {
 
   const team = getTeam(state, props);
   const sortedRuns = getSortedRunsForTeam(state, props);
-  const currentRun = getActiveRun(sortedRuns);
-  const progress = getTeamProgress(state, props);
 
   return {
     team,
     sortedRuns,
-    currentRun,
-    progress,
+    currentRun: getActiveRun(sortedRuns),
+    progress: getTeamProgress(state, props),
+    isFinished: isTeamFinished(state, props),
+    finalGameTime: getTeamLiveEstimate(state, props),
     ready: !!team
   }
 };
